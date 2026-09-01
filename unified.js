@@ -10,5 +10,22 @@
   if(s.font==='rounded')document.body.style.fontFamily='"Hiragino Maru Gothic ProN","Yu Gothic UI",sans-serif';
   if(s.font==='serif')document.body.style.fontFamily='"Yu Mincho","Hiragino Mincho ProN",serif';
   if(s.motion==='off'){const st=document.createElement('style');st.textContent='*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}';document.head.appendChild(st)}
-  const p=location.pathname.split('/').pop()||'index.html';if(!['index.html','management.html','settings.html','glossary.html','learn.html'].includes(p))localStorage.setItem('boki3_last_page',p+location.search);
+  const p=location.pathname.split('/').pop()||'index.html';
+  if(!['index.html','management.html','settings.html','glossary.html','learn.html'].includes(p))localStorage.setItem('boki3_last_page',p+location.search);
+
+  // q3.html?screen=... で指定された理解教材を確実に開く。
+  // q3.html 内の nav() はページ末尾のスクリプトで定義されるため、
+  // DOMContentLoaded 後に呼び出す。
+  document.addEventListener('DOMContentLoaded',()=>{
+    if(p!=='q3.html') return;
+    const screen=new URLSearchParams(location.search).get('screen');
+    if(!screen) return;
+    const allowed=new Set(['map','journey','worksheet','ledger','carry','year','lab','learn','home']);
+    if(!allowed.has(screen)) return;
+    if(!document.getElementById(screen)) return;
+    if(typeof window.nav==='function'){
+      window.nav(screen);
+      window.scrollTo({top:0,behavior:'auto'});
+    }
+  });
 })();

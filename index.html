@@ -11,6 +11,8 @@
 <title>日商簿記3級トレーナー</title>
 <style>
 .personal-daily{display:grid;grid-template-columns:60px 1fr 34px;gap:11px;align-items:center;min-height:104px;border-radius:20px;padding:13px 14px;text-decoration:none;background:linear-gradient(135deg,#173f79,#176fc8 58%,#2d9bdd);color:#fff;box-shadow:0 9px 22px rgba(25,82,151,.24);position:relative;overflow:hidden}.personal-daily:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-50px;top:-55px;background:rgba(255,255,255,.10)}.personal-daily .mark{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.17);font-size:1.55rem;font-weight:950}.personal-daily strong{display:block;font-size:1.12rem}.personal-daily small{display:block;margin-top:3px;opacity:.92;font-weight:700;line-height:1.45}.personal-daily .mixline{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.personal-daily .mixline i{font-style:normal;font-size:.67rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px 6px}.personal-daily .go{font-size:2rem;z-index:1}
+.touch-lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:0 0 6px}.touch-lab-card{min-height:128px;border-radius:20px;padding:15px 14px;text-decoration:none;color:#fff;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 9px 24px rgba(28,48,73,.14);position:relative;overflow:hidden}.touch-lab-card:after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;right:-28px;top:-31px;background:rgba(255,255,255,.13)}.touch-lab-card .touch-icon{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:1.35rem;font-weight:950;position:relative;z-index:1}.touch-lab-card strong{display:block;font-size:1rem;line-height:1.3;margin-top:9px;position:relative;z-index:1}.touch-lab-card small{display:block;font-size:.74rem;line-height:1.45;margin-top:4px;color:rgba(255,255,255,.94);font-weight:700;position:relative;z-index:1}.touch-lab-card .arrow{position:absolute;right:13px;bottom:10px;font-size:1.65rem;font-weight:900;color:#fff;opacity:.92}.touch-lab-card.worksheet{background:linear-gradient(135deg,#22a887,#0c8d96)}.touch-lab-card.ledger{background:linear-gradient(135deg,#398fd8,#1767b4)}.touch-lab-card.carry{background:linear-gradient(135deg,#f09a31,#e46d22)}.touch-lab-card.lab{background:linear-gradient(135deg,#8d63de,#6541c4)}
+@media(max-width:380px){.touch-lab-grid{grid-template-columns:1fr}.touch-lab-card{min-height:108px}}
 </style>
 </head>
 <body class="app-v20 app-home">
@@ -48,6 +50,14 @@
     <a class="app-main-card q2 app-tap" href="q2.html"><span class="app-symbol">▤</span><span><strong>第2問　帳簿・勘定</strong><small>補助簿・元帳・商品有高帳を理解する</small></span><span class="go">›</span></a>
     <a class="app-main-card q3 app-tap" href="q3.html"><span class="app-symbol">▥</span><span><strong>第3問　決算・精算表</strong><small>決算整理からP/L・B/Sまで</small></span><span class="go">›</span></a>
     <a class="app-main-card learn app-tap" href="understand.html"><span class="app-symbol">💡</span><span><strong>しくみを理解</strong><small>簿記マップ・数字の旅・論点ラボ</small></span><span class="go">›</span></a>
+  </div>
+
+  <div class="app-section-title">さらに触って理解</div>
+  <div class="touch-lab-grid" aria-label="動かして理解する教材">
+    <a class="touch-lab-card worksheet app-tap" href="q3.html?screen=worksheet"><span class="touch-icon">▦</span><span><strong>精算表連動・What-if</strong><small>修正額を動かして、P/L・B/S・利益の連動を見る</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card ledger app-tap" href="q3.html?screen=ledger"><span class="touch-icon">T</span><span><strong>仕訳→元帳→試算表</strong><small>仕訳した数字が、どこへ集まるかを追う</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card carry app-tap" href="q3.html?screen=carry"><span class="touch-icon">↗</span><span><strong>締切・繰越</strong><small>3/31から4/1へ、残る科目と消える科目を体感</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card lab app-tap" href="q3.html?screen=lab"><span class="touch-icon">◎</span><span><strong>総合簿記ラボ</strong><small>取引から決算書・繰越までを1本で追う</small></span><span class="arrow">›</span></a>
   </div>
 
   <div class="app-section-title">復習・確認</div>

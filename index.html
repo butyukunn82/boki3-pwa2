@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="common.css">
 <link rel="stylesheet" href="app-v20.css">
 <title>日商簿記3級トレーナー</title>
+<style>
+.personal-daily{display:grid;grid-template-columns:60px 1fr 34px;gap:11px;align-items:center;min-height:104px;border-radius:20px;padding:13px 14px;text-decoration:none;background:linear-gradient(135deg,#173f79,#176fc8 58%,#2d9bdd);color:#fff;box-shadow:0 9px 22px rgba(25,82,151,.24);position:relative;overflow:hidden}.personal-daily:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-50px;top:-55px;background:rgba(255,255,255,.10)}.personal-daily .mark{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.17);font-size:1.55rem;font-weight:950}.personal-daily strong{display:block;font-size:1.12rem}.personal-daily small{display:block;margin-top:3px;opacity:.92;font-weight:700;line-height:1.45}.personal-daily .mixline{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.personal-daily .mixline i{font-style:normal;font-size:.67rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px 6px}.personal-daily .go{font-size:2rem;z-index:1}
+</style>
 </head>
 <body class="app-v20 app-home">
 <div class="u-app">
@@ -31,6 +34,13 @@
     </div>
     <a id="continueBtn" class="app-continue app-tap" href="learn.html">続きからはじめる ▶</a>
   </section>
+
+  <div class="app-section-title">今日のおすすめ</div>
+  <a class="personal-daily app-tap" href="daily.html">
+    <span class="mark">10</span>
+    <span><strong>あなた専用 今日の10問</strong><small>第1問・第2問・第3問の誤答履歴から、今日いちばん効く問題を自動選定</small><span class="mixline"><i>弱点優先</i><i>大問横断</i><i>選択肢ランダム</i></span></span>
+    <span class="go">›</span>
+  </a>
 
   <div class="app-section-title">問題別に学ぶ</div>
   <div class="app-main-list">
@@ -58,7 +68,7 @@
 <script src="unified.js"></script>
 <script>
 function safe(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
-const sets=[safe('boki3_q1_trainer_v1')||{},safe('boki3trainer_v2')||{},safe('boki3_q3_trainer_v1')||{}];
+const sets=[safe('boki3_q1_trainer_v1')||{},safe('boki3trainer_v2')||{},safe('boki3_q3_trainer_v1')||{},safe('boki3_cross_learning_v1')||{}];
 let ans=0,cor=0;sets.forEach(x=>{ans+=x.answered||0;cor+=x.correct||0});document.getElementById('allAcc').textContent=ans?Math.round(cor/ans*100)+'%':'—';
 const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const dk=dateKey(new Date());let today=0;sets.forEach(x=>today+=(x.history?.[dk]?.answered||0));document.getElementById('todayCount').textContent=today;
 const goal=Number(window.BOKI_SETTINGS?.daily||10);document.getElementById('dailyGoal').textContent=goal;const pct=Math.min(100,Math.round(today/Math.max(1,goal)*100));document.getElementById('todayRing').style.setProperty('--p',pct);

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173b67">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>日商簿記3級 第2問トレーナー</title>
+<style>
+:root{--navy:#173b67;--navy2:#24558b;--blue:#2f6fad;--bg:#f4f7fb;--card:#fff;--text:#243244;--muted:#6f7f91;--line:#d6e0ea;--good:#22734d;--goodbg:#edf9f2;--bad:#b53a3a;--badbg:#fff1f1;--warn:#986b14;--warnbg:#fff8e8;--shadow:0 8px 30px rgba(26,48,79,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}.app{max-width:920px;margin:auto;min-height:100vh;padding-bottom:80px}.top{position:sticky;top:0;z-index:20;background:rgba(23,59,103,.97);color:white;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.1)}.brand{font-weight:800;font-size:1rem}.top small{opacity:.85}.top-actions{display:flex;gap:8px}.icon-btn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;border-radius:10px;padding:7px 10px;cursor:pointer}.screen{display:none;padding:16px}.screen.active{display:block}.hero{background:linear-gradient(135deg,#173b67,#2f6fad);color:white;border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-bottom:15px}.hero h1{font-size:1.35rem;margin:0 0 5px}.hero p{margin:0;opacity:.9;font-size:.92rem}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;box-shadow:var(--shadow)}.stat strong{display:block;font-size:1.15rem;color:var(--navy)}.stat span{font-size:.73rem;color:var(--muted)}.section-title{font-size:.92rem;font-weight:800;margin:18px 2px 9px}.mode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mode{border:1px solid var(--line);background:#fff;border-radius:15px;padding:15px;text-align:left;cursor:pointer;box-shadow:var(--shadow)}.mode b{display:block;color:var(--navy);font-size:1rem;margin-bottom:3px}.mode span{font-size:.8rem;color:var(--muted)}.weak-card,.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:var(--shadow)}.weak-row{display:grid;grid-template-columns:1fr 90px 48px;gap:8px;align-items:center;font-size:.82rem;margin:8px 0}.bar{height:8px;background:#edf1f5;border-radius:20px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);border-radius:20px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.pill{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 10px;font-size:.78rem;cursor:pointer}.pill.active{background:var(--navy);color:#fff;border-color:var(--navy)}.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.progress{font-weight:800;font-size:.88rem}.timer{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#fff;border:1px solid var(--line);padding:5px 9px;border-radius:9px;font-size:.88rem}.question-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow)}.cat{display:inline-block;background:#edf5ff;color:#24558b;border:1px solid #cddff2;border-radius:999px;padding:3px 8px;font-size:.72rem;font-weight:800}.qtitle{font-size:1rem;font-weight:800;margin:10px 0}.transaction{background:#f7faff;border-left:4px solid var(--blue);padding:12px;border-radius:8px;margin:10px 0 14px;font-size:.9rem}.answers{display:grid;gap:8px}.choice{width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:11px;padding:12px;font-size:.9rem;cursor:pointer}.choice.selected{border-color:var(--blue);background:#eff7ff}.choice.correct{border-color:var(--good);background:var(--goodbg)}.choice.incorrect{border-color:var(--bad);background:var(--badbg)}.choice:disabled{opacity:1;cursor:default}.choice:not(:disabled):active{transform:scale(.995)}.dontknow{background:#fff7e8;color:#805c16;border:1px solid #e5ca94}.num-input{width:100%;padding:13px;border:2px solid var(--line);border-radius:11px;font-size:1.05rem}.num-input:focus{outline:none;border-color:var(--blue)}
+.answer-select{width:100%;min-height:48px;padding:11px 40px 11px 12px;border:2px solid var(--line);border-radius:11px;background:#fff;color:var(--text);font-size:1rem;font-weight:700;cursor:pointer}.answer-select:focus{outline:none;border-color:var(--blue);background:#f7fbff}.answer-select.correct{border-color:var(--good);background:var(--goodbg);color:var(--good)}.answer-select.incorrect{border-color:var(--bad);background:var(--badbg);color:var(--bad)}.answer-select:disabled{opacity:1;cursor:default}.calc-toggle-row{display:flex;justify-content:flex-end;margin:-3px 0 10px}.calc-toggle{border:1px solid #c9d6e3;background:#fff;color:var(--navy);border-radius:10px;padding:8px 11px;font-weight:800;cursor:pointer}.calculator-panel{display:none;border:1px solid #cbd8e5;background:#f7f9fc;border-radius:14px;padding:11px;margin:0 0 13px;max-width:430px;margin-left:auto}.calculator-panel.show{display:block}.calc-history{display:grid;gap:6px;margin-bottom:8px}.calc-history-empty{border:1px dashed #c7d3df;border-radius:9px;padding:9px 10px;color:var(--muted);font-size:.76rem;background:#fff}.calc-history-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:7px;align-items:center;border:1px solid #d7e0e9;background:#fff;border-radius:9px;padding:7px 9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.calc-history-no{font-size:.7rem;color:var(--muted);font-weight:800}.calc-history-exp{min-width:0;overflow-wrap:anywhere;font-size:.82rem}.calc-history-result{font-weight:900;color:var(--navy);white-space:nowrap}.calc-total{display:none;grid-template-columns:1fr auto;gap:8px;align-items:center;background:#fff7db;border:1px solid #e6cd82;border-radius:9px;padding:9px 10px;margin-bottom:8px;font-weight:900}.calc-total.show{display:grid}.calc-live{background:#18212d;color:#fff;border-radius:9px;padding:8px 12px;margin-bottom:8px}.calc-live-expression{min-height:18px;text-align:right;color:#c8d4df;font:600 .75rem ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}.calc-display{text-align:right;font:800 1.35rem ui-monospace,SFMono-Regular,Menlo,monospace;min-height:34px;overflow-wrap:anywhere}.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.calc-key{border:1px solid #cdd7e2;background:#fff;border-radius:9px;min-height:44px;font-size:1rem;font-weight:800;cursor:pointer}.calc-key.op{background:#eaf1f8;color:var(--navy)}.calc-key.eq{background:var(--navy);color:#fff;border-color:var(--navy)}.calc-footer-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.calc-total-btn{border:0;background:#8a651b;color:#fff;border-radius:9px;min-height:44px;font-weight:900;cursor:pointer}.calc-clear-history{border:1px solid #cdd7e2;background:#fff;color:#53677f;border-radius:9px;min-height:44px;font-weight:800;cursor:pointer}.calc-total-btn:disabled{opacity:.45;cursor:default}.calc-hint{font-size:.7rem;color:var(--muted);margin-top:7px;text-align:right}.multi-note{font-size:.78rem;color:var(--muted);margin-bottom:7px}.actions{display:flex;gap:9px;margin-top:14px}.btn{border:0;border-radius:11px;padding:12px 14px;font-weight:800;cursor:pointer;flex:1}.primary{background:var(--navy);color:#fff}.secondary{background:#e9eef4;color:#33465c}.ghost{background:#fff;border:1px solid var(--line);color:#40546b}.feedback{margin-top:15px;display:none}.feedback.show{display:block}.result-banner{border-radius:11px;padding:10px 12px;font-weight:800;margin-bottom:10px}.result-banner.good{background:var(--goodbg);color:var(--good);border:1px solid #a9d7bd}.result-banner.bad{background:var(--badbg);color:var(--bad);border:1px solid #e5b2b2}.exp{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin:8px 0;background:#fff}.exp h4{font-size:.79rem;margin:0 0 4px;color:#53677f}.exp div{font-size:.87rem}.think-flow{display:grid;gap:7px}.think-step{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;background:#f8fafc;border-radius:9px;padding:8px}.think-step b{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-size:.75rem}.term-link{color:#1f67aa;text-decoration:underline dotted 2px;cursor:pointer;font-weight:700}.ledger-wrap{overflow:auto}.ledger{border-collapse:collapse;width:100%;min-width:500px;font-size:.8rem}.ledger th,.ledger td{border:1px solid #9fb0c2;padding:6px;text-align:center}.ledger th{background:#e9eff5}.ledger-btn{margin-top:8px}.complete{text-align:center;padding:28px 15px}.complete .big{font-size:2rem;font-weight:900;color:var(--navy)}.complete p{color:var(--muted)}.modal{display:none;position:fixed;inset:0;background:rgba(19,31,45,.52);z-index:60;padding:18px;align-items:center;justify-content:center}.modal.show{display:flex}.modal-card{background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:82vh;overflow:auto;box-shadow:0 16px 55px rgba(0,0,0,.25)}.modal-head{background:var(--navy);color:#fff;padding:13px 15px;display:flex;justify-content:space-between;align-items:center}.modal-body{padding:15px}.close{border:0;background:transparent;color:#fff;font-size:1.4rem;cursor:pointer}.glossary-list{display:grid;gap:8px}.glossary-item{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;cursor:pointer}.glossary-item b{color:var(--navy)}.search{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin-bottom:10px}.tag{display:inline-block;font-size:.7rem;background:#edf5ff;color:#2b5f95;border-radius:999px;padding:3px 7px;margin-bottom:7px}.footer-nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:flex;justify-content:center}.footer-inner{max-width:920px;width:100%;display:grid;grid-template-columns:repeat(5,1fr)}.navbtn{border:0;background:transparent;padding:10px 4px;font-size:.72rem;color:#66788c;cursor:pointer}.navbtn b{display:block;font-size:1.1rem}.navbtn.active{color:var(--navy);font-weight:800}.install-note{display:none;background:var(--warnbg);border:1px solid #ead29f;border-radius:12px;padding:10px 12px;font-size:.8rem;margin:10px 0}.install-note.show{display:block}.small{font-size:.78rem;color:var(--muted)}.danger-link{color:#a73636;cursor:pointer;text-decoration:underline}.badge{display:inline-block;background:#eef2f6;border-radius:6px;padding:1px 5px;font-size:.72rem;color:#5f7287}.review-badge{background:#fff3d4;color:#8a631a}.empty{text-align:center;color:var(--muted);padding:18px}.settings-row{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:11px 0;border-bottom:1px solid #edf1f5}.settings-row:last-child{border-bottom:0}.switch{width:48px;height:28px;background:#cdd6df;border-radius:30px;position:relative;cursor:pointer}.switch i{position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}.switch.on{background:var(--navy)}.switch.on i{left:23px}@media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr)}.mode-grid{grid-template-columns:1fr}.screen{padding:12px}.question-card{padding:14px}.top small{display:none}.weak-row{grid-template-columns:1fr 80px 42px}}
+
+.daily-card{background:#fff;border:2px solid #b9d5ef;border-radius:16px;padding:14px 15px;margin:12px 0;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;box-shadow:var(--shadow)}
+.daily-card h3{margin:0 0 3px;color:var(--navy);font-size:1rem}.daily-card p{margin:0;color:var(--muted);font-size:.8rem}.daily-go{border:0;background:var(--navy);color:#fff;border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer;white-space:nowrap}
+.parent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.parent-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.parent-card strong{display:block;font-size:1.25rem;color:var(--navy)}.parent-card span{font-size:.72rem;color:var(--muted)}
+.report-table{width:100%;border-collapse:collapse;font-size:.8rem}.report-table th,.report-table td{border-bottom:1px solid #edf1f5;padding:8px 5px;text-align:right}.report-table th:first-child,.report-table td:first-child{text-align:left}.report-table th{color:#607389;font-weight:700}
+.reason-box{background:#fff8e8;border:1px solid #ecd8a8;border-radius:11px;padding:10px 11px;margin:8px 0}.reason-box b{font-size:.8rem;display:block;margin-bottom:6px;color:#725518}.reason-grid{display:flex;flex-wrap:wrap;gap:6px}.reason-btn{border:1px solid #dbc48f;background:white;border-radius:999px;padding:6px 9px;font-size:.75rem;cursor:pointer}.reason-btn.done{background:#725518;color:#fff;border-color:#725518}
+.mastery{font-size:.7rem;border-radius:999px;padding:2px 7px;display:inline-block}.m0{background:#eef2f6;color:#607389}.m1{background:#fff3d4;color:#8a631a}.m2{background:#e8f5ff;color:#286495}.m3{background:#eaf8ef;color:#24714c}
+.parent-tip{background:#f4f8fd;border-left:4px solid var(--blue);border-radius:8px;padding:10px 12px;font-size:.82rem;margin:10px 0}.today-progress{font-weight:800;color:var(--navy)}
+@media(max-width:600px){.parent-grid{grid-template-columns:repeat(2,1fr)}.daily-card{grid-template-columns:1fr}.daily-go{width:100%}}
+
+
+/* Unified touch UI v1.1 */
+.top{min-height:58px}.top-actions{align-items:center}.top-actions a.icon-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:42px}
+.mode{position:relative;min-height:96px;border-radius:18px;padding:15px 42px 15px 16px;transition:transform .12s ease,border-color .12s ease}.mode:after{content:"›";position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:1.25rem;font-weight:900;color:#8295a8}.mode b{font-size:1.02rem}.mode:active{transform:scale(.985)}
+.daily-card{border-radius:20px;padding:16px}.daily-go{min-height:52px;border-radius:14px;font-size:.95rem}.choice{min-height:62px;border-radius:15px;padding:14px 13px;font-size:1rem}.dontknow{min-height:52px;border-radius:14px}.btn{min-height:52px;border-radius:14px}.question-card{border-radius:20px}.transaction{border-radius:11px;padding:13px}.footer-inner .navbtn{min-height:58px}.icon-btn{min-width:42px;min-height:42px}.stat{border-radius:16px}.weak-card,.panel{border-radius:18px}
+@media(hover:hover) and (pointer:fine){.mode:hover{transform:translateY(-2px);border-color:#a7c4df}}
+@media(max-width:600px){.mode{min-height:88px}.choice{font-size:.96rem}.actions{display:grid;grid-template-columns:1fr}.actions .btn{width:100%}}
+
+</style>
+<link rel="stylesheet" href="mobile-app.css"><link rel="stylesheet" href="app-ui-v13.css">
+<link rel="stylesheet" href="app-v20.css">
+</head>
+<body class="app-v13 app-v20">
+<div class="app">
+  <header class="top"><div><div class="brand">第2問　帳簿・勘定</div><small>帳簿のしくみを理解しよう</small></div><div class="top-actions"><a class="icon-btn integrated-home-link" href="index.html">ホーム</a><button class="icon-btn" id="installBtn" style="display:none">＋追加</button></div></header>
+
+  <main id="home" class="screen active">
+  <section class="app-learning-head" style="border-color:#cfe5fa;background:linear-gradient(135deg,#eef7ff,#fff)"><h1>第2問　帳簿・勘定</h1><p>帳簿の役割を、問題と実物イメージで結びつけます。</p><img src="assets/mascot.png" class="app-mascot" alt="応援キャラクター"></section>
+  <div id="installNote" class="install-note">ホーム画面に追加すると、アプリのように使えます。</div>
+  <div class="daily-card"><div><h3>今日の10問</h3><p id="dailyMsg">苦手・復習・未出題から自動で選びます。</p></div><button class="daily-go" onclick="startMode('daily')">▶ 今日の10問を始める</button></div>
+  <div class="stats-grid"><div class="stat"><strong id="stToday">0</strong><span>今日</span></div><div class="stat"><strong id="stAccuracy">0%</strong><span>正答率</span></div><div class="stat"><strong id="stAvg">--</strong><span>平均秒</span></div><div class="stat"><strong id="stStreak">0日</strong><span>連続</span></div></div>
+  <div class="app-section-title">学習メニュー</div>
+  <div class="q2-menu">
+    <button class="topic-button" onclick="startMode('speed')"><span class="ico">⚡</span><span><b>瞬間ドリル</b><small>帳簿・勘定を見た瞬間に判断</small></span></button>
+    <button class="topic-button" onclick="startMode('structure')"><span class="ico">▤</span><span><b>帳簿の構造を理解</b><small>取引 → 仕訳 → 補助簿・元帳</small></span></button>
+    <button class="topic-button" onclick="startMode('daily')"><span class="ico">▦</span><span><b>補助簿・補助元帳</b><small>売上帳・仕入帳・売掛金元帳など</small></span></button>
+    <button class="topic-button" onclick="startMode('cbt')"><span class="ico">▥</span><span><b>CBT演習</b><small>15問を本番風に連続して解く</small></span></button>
+    <button class="topic-button" onclick="startMode('weak')"><span class="ico">🎯</span><span><b>苦手だけ</b><small>誤答・時間超過を優先して復習</small></span></button>
+  </div>
+  <div class="app-section-title">分野別の定着度</div><div class="weak-card" id="weakList"></div>
+</main>
+
+  <main id="quiz" class="screen">
+    <div class="quiz-head"><div class="progress" id="progressText">1 / 10</div><div class="timer" id="timerText">00:00</div></div>
+    <div class="toolbar" id="modeToolbar"></div>
+    <section class="question-card" id="questionCard"></section>
+  </main>
+
+  <main id="review" class="screen"><div class="section-title">復習リスト</div><div class="panel" id="reviewList"></div></main>
+
+  <main id="parent" class="screen">
+    <div class="section-title">学習管理レポート</div>
+    <div class="parent-tip" id="parentTip">正答率だけでなく、「どこで迷っているか」と回答速度を見ます。</div>
+    <div class="parent-grid">
+      <div class="parent-card"><strong id="pStreak">0日</strong><span>連続学習</span></div>
+      <div class="parent-card"><strong id="pToday">0問</strong><span>今日</span></div>
+      <div class="parent-card"><strong id="p7Acc">--</strong><span>直近7日正答率</span></div>
+      <div class="parent-card"><strong id="pReview">0問</strong><span>要復習</span></div>
+    </div>
+    <div class="section-title">直近7日</div><div class="panel" id="weekReport"></div>
+    <div class="section-title">つまずきの理由</div><div class="panel" id="reasonReport"></div>
+    <div class="section-title">分野別の定着度</div><div class="panel" id="parentCategoryReport"></div>
+  </main>
+
+  <main id="settings" class="screen"><div class="section-title">設定</div><div class="panel">
+    <div class="settings-row"><div><b>音なし学習</b><div class="small">この版は常に無音です</div></div><span class="badge">ON</span></div>
+    <div class="settings-row"><div><b>正解でも15秒超なら要復習</b><div class="small">反射速度も定着判定に使います</div></div><div id="slowSwitch" class="switch on" onclick="toggleSlow()"><i></i></div></div>
+    <div class="settings-row"><div><b>学習データ</b><div class="small">この端末内だけに保存します</div></div><span class="danger-link" onclick="resetStats()">リセット</span></div>
+    <div class="settings-row"><div><b>問題バンク</b><div class="small" id="bankCount"></div></div><span class="badge">v2.3</span></div>
+  </div></main>
+</div>
+
+<nav class="footer-nav"><div class="footer-inner"><a class="navbtn" href="index.html"><b>⌂</b>ホーム</a><a class="navbtn active" href="learn.html"><b>▣</b>学習メニュー</a><a class="navbtn" href="management.html#review"><b>↻</b>復習</a><a class="navbtn" href="settings.html"><b>•••</b>その他</a></div></nav>
+
+<div class="modal" id="glossaryModal" onclick="hideModal(event,'glossaryModal')"><div class="modal-card" onclick="event.stopPropagation()"><div class="modal-head"><b>重要用語辞典</b><button class="close" onclick="hideModal(null,'glossaryModal')">×</button></div><div class="modal-body"><input id="glossarySearch" class="search" placeholder="用語を検索" oninput="renderGlossaryList()"><div id="glossaryContent"></div></div></div></div>
+<div class="modal" id="ledgerModal" onclick="hideModal(event,'ledgerModal')"><div class="modal-card" onclick="event.stopPropagation()"><div class="modal-head"><b id="ledgerTitle">実際の帳簿</b><button class="close" onclick="hideModal(null,'ledgerModal')">×</button></div><div class="modal-body" id="ledgerBody"></div></div></div></div>
+
+<script>
+const glossary={
+"現金出納帳":{cat:"補助記入帳",desc:"現金の増減を取引順に記録する帳簿。",point:"現金勘定が動けば候補。自社振出小切手は現金ではなく当座預金。"},
+"当座預金出納帳":{cat:"補助記入帳",desc:"当座預金の預入れ・引出し・小切手振出しを記録する帳簿。",point:"自社が小切手を振り出したら当座預金が減少する。"},
+"売上帳":{cat:"補助記入帳",desc:"商品の売上取引の明細を記録する帳簿。",point:"現金売上・掛売上など、商品を売り上げた取引が対象。"},
+"仕入帳":{cat:"補助記入帳",desc:"商品の仕入取引の明細を記録する帳簿。",point:"商品以外の備品購入は仕入帳に記入しない。"},
+"売掛金元帳":{cat:"補助元帳",desc:"得意先別に売掛金の発生・回収・残高を管理する帳簿。",point:"『誰から回収するか』を個別管理する。"},
+"買掛金元帳":{cat:"補助元帳",desc:"仕入先別に買掛金の発生・支払・残高を管理する帳簿。",point:"『誰へ支払うか』を個別管理する。"},
+"商品有高帳":{cat:"補助元帳",desc:"商品種類別に受入・払出・残高の数量と金額を管理する帳簿。",point:"売上金額ではなく、商品の原価・数量を追う。"},
+"受取手形記入帳":{cat:"補助記入帳",desc:"受け取った手形の受入れ・決済・譲渡などを管理する帳簿。",point:"受取手形が増減する取引を追う。"},
+"支払手形記入帳":{cat:"補助記入帳",desc:"自社が振り出した手形の振出し・決済を管理する帳簿。",point:"他社の手形を裏書譲渡しても支払手形にはならない。"},
+"固定資産台帳":{cat:"補助簿",desc:"備品・建物・車両などの取得原価や減価償却を管理する帳簿。",point:"商品ではなく長期間使用する資産を個別管理する。"},
+"移動平均法":{cat:"商品有高帳",desc:"仕入れるたびに、在庫総額÷在庫数量で新しい平均単価を計算する方法。",point:"払出しは直前の最新平均単価で計算する。"},
+"先入先出法":{cat:"商品有高帳",desc:"先に仕入れた商品から先に払い出したと仮定する方法。",point:"期末在庫は原則として新しい仕入分から構成される。"},
+"前払費用":{cat:"経過勘定・資産",desc:"支払済みだが翌期以降に対応する費用。",point:"費用を減らし、資産へ繰り延べる。"},
+"未払費用":{cat:"経過勘定・負債",desc:"当期の費用だがまだ支払っていない金額。",point:"費用を追加し、負債を計上する。"},
+"未収収益":{cat:"経過勘定・資産",desc:"当期の収益だがまだ受け取っていない金額。",point:"収益を追加し、資産を計上する。"},
+"前受収益":{cat:"経過勘定・負債",desc:"受取済みだが翌期以降に対応する収益。",point:"収益を減らし、負債へ繰り延べる。"},
+"再振替仕訳":{cat:"期首処理",desc:"前期末の経過勘定の決算整理仕訳を翌期首に逆にする仕訳。",point:"『前期末の仕訳をそのまま逆』が基本。"},
+"減価償却":{cat:"固定資産",desc:"固定資産の取得原価を使用期間に配分して費用化する手続。",point:"定額法では原則として償却対象額÷耐用年数。"},
+"減価償却累計額":{cat:"資産の控除項目",desc:"過年度からの減価償却費の累計額。",point:"間接法では固定資産を直接減らさず累計額を貸方計上する。"},
+"貸倒引当金":{cat:"評価性引当金",desc:"売掛金などの将来の貸倒れに備えて見積計上するもの。",point:"必要額と既存残高の差額を調整する。"},
+"繰越利益剰余金":{cat:"純資産",desc:"これまでに蓄積された利益を表す純資産の勘定。",point:"当期純利益は貸方、当期純損失は借方へ振り替える。"},
+"損益":{cat:"決算振替",desc:"収益・費用を集めて当期純利益または純損失を計算する集合勘定。",point:"費用・収益は次期繰越せず損益へ振り替える。"},
+"分割法":{cat:"伝票会計",desc:"一部現金取引を現金部分と掛け部分にそのまま分けて起票する方法。",point:"振替伝票は掛け部分だけ。"},
+"分解法":{cat:"伝票会計",desc:"一部現金取引を全額掛けとみなす取引と現金決済に分ける方法。",point:"振替伝票には取引総額を起票する。"},
+"現金過不足":{cat:"決算整理",desc:"現金実査額と帳簿残高が一致しないとき、一時的に差額を処理する勘定。",point:"原因判明時は原因科目へ振り替え、決算時まで不明なら雑損・雑益で処理する。"},
+"貸倒引当金繰入":{cat:"決算整理・費用",desc:"売掛金などの貸倒見積額を当期費用として計上する勘定。",point:"期末必要額と既存の貸倒引当金残高との差額を計上する。"},
+"売上原価":{cat:"決算整理",desc:"当期に販売した商品の原価。",point:"期首商品＋当期仕入－期末商品で求める。"},
+"仮払消費税":{cat:"税金・資産",desc:"仕入等の支払時に負担した消費税を一時的に記録する資産勘定。",point:"税抜方式では仕入等とは分けて処理する。"},
+"仮受消費税":{cat:"税金・負債",desc:"売上等で預かった消費税を一時的に記録する負債勘定。",point:"税抜方式では売上等とは分けて処理する。"}
+};
+
+const ledgerSamples={
+"現金出納帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>摘要</th><th>収入</th><th>支出</th><th>残高</th></tr><tr><td>8/31</td><td>売上</td><td>40,000</td><td></td><td>40,000増</td></tr></table></div>`,
+"売掛金元帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th colspan="5">A社　売掛金元帳</th></tr><tr><th>日付</th><th>摘要</th><th>借方</th><th>貸方</th><th>残高</th></tr><tr><td>8/31</td><td>売上</td><td>80,000</td><td></td><td>80,000</td></tr></table></div>`,
+"買掛金元帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th colspan="5">B社　買掛金元帳</th></tr><tr><th>日付</th><th>摘要</th><th>借方</th><th>貸方</th><th>残高</th></tr><tr><td>8/31</td><td>仕入</td><td></td><td>80,000</td><td>80,000</td></tr></table></div>`,
+"商品有高帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>摘要</th><th colspan="3">受入</th><th colspan="3">払出</th><th colspan="3">残高</th></tr><tr><th></th><th></th><th>数量</th><th>単価</th><th>金額</th><th>数量</th><th>単価</th><th>金額</th><th>数量</th><th>単価</th><th>金額</th></tr><tr><td>8/31</td><td>売上</td><td></td><td></td><td></td><td>10</td><td>500</td><td>5,000</td><td>25</td><td>500</td><td>12,500</td></tr></table></div>`,
+"当座預金出納帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>摘要</th><th>預入</th><th>引出</th><th>残高</th></tr><tr><td>8/31</td><td>備品購入・小切手振出</td><td></td><td>150,000</td><td>150,000減</td></tr></table></div>`,
+"売上帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>得意先</th><th>品名</th><th>数量</th><th>単価</th><th>金額</th></tr><tr><td>8/31</td><td>A社</td><td>商品X</td><td>10</td><td>12,000</td><td>120,000</td></tr></table></div>`,
+"仕入帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>仕入先</th><th>品名</th><th>数量</th><th>単価</th><th>金額</th></tr><tr><td>8/31</td><td>B社</td><td>商品X</td><td>10</td><td>8,000</td><td>80,000</td></tr></table></div>`,
+"受取手形記入帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>振出人</th><th>金額</th><th>満期日</th><th>てん末</th></tr><tr><td>8/31</td><td>A社</td><td>130,000</td><td>10/31</td><td>受入</td></tr></table></div>`,
+"支払手形記入帳":()=>`<div class="ledger-wrap"><table class="ledger"><tr><th>日付</th><th>受取人</th><th>金額</th><th>満期日</th><th>てん末</th></tr><tr><td>8/31</td><td>B社</td><td>110,000</td><td>10/31</td><td>振出</td></tr></table></div>`
+};
+
+function fmt(n){return Number(n).toLocaleString('ja-JP')}
+function q(id,category,title,transaction,type,options,answer,flow,point,caution,ledger=null){return{id,category,title,transaction,type,options,answer,flow,point,caution,ledger}}
+const questions=[];
+
+// A. 補助簿判定 36問
+const ledgerCases=[
+ {t:"商品 ¥120,000 を売り上げ、¥40,000を現金で受け取り、残額を掛けとした。",yes:["現金出納帳","売上帳","売掛金元帳","商品有高帳"],no:["当座預金出納帳","買掛金元帳","仕入帳"]},
+ {t:"商品 ¥80,000 を掛けで仕入れた。",yes:["仕入帳","買掛金元帳","商品有高帳"],no:["売上帳","売掛金元帳","現金出納帳"]},
+ {t:"商品 ¥60,000 を現金で販売した。",yes:["現金出納帳","売上帳","商品有高帳"],no:["売掛金元帳","仕入帳","買掛金元帳"]},
+ {t:"業務用パソコン ¥150,000 を購入し、小切手を振り出して支払った。",yes:["当座預金出納帳","固定資産台帳"],no:["仕入帳","商品有高帳","現金出納帳"]},
+ {t:"売掛金 ¥90,000 を現金で回収した。",yes:["現金出納帳","売掛金元帳"],no:["売上帳","商品有高帳","仕入帳"]},
+ {t:"買掛金 ¥70,000 を小切手を振り出して支払った。",yes:["当座預金出納帳","買掛金元帳"],no:["仕入帳","商品有高帳","現金出納帳"]},
+ {t:"商品 ¥100,000 を仕入れ、以前受け取っていた手形を裏書譲渡して支払った。",yes:["仕入帳","受取手形記入帳","商品有高帳"],no:["支払手形記入帳","現金出納帳","売上帳"]},
+ {t:"商品 ¥110,000 を仕入れ、代金として自社振出の約束手形を渡した。",yes:["仕入帳","支払手形記入帳","商品有高帳"],no:["受取手形記入帳","現金出納帳","売上帳"]},
+ {t:"商品 ¥130,000 を販売し、得意先振出の約束手形を受け取った。",yes:["売上帳","受取手形記入帳","商品有高帳"],no:["支払手形記入帳","売掛金元帳","仕入帳"]}
+];
+let lid=1;
+for(const c of ledgerCases){for(const name of [...c.yes.slice(0,2),...c.no.slice(0,2)]){const yes=c.yes.includes(name);questions.push(q(`L${lid++}`,"補助簿の選択",`「${name}」に記入するか判定しなさい。`,c.t,"single",["記入する","記入しない"],yes?"記入する":"記入しない",[`取引を仕訳の要素に分ける。`,`「${name}」が管理する勘定・取引が動くか確認する。`,`今回は「${yes?'動く':'動かない'}」ので ${yes?'記入する':'記入しない'}。`],yes?`${name}の管理対象がこの取引に含まれます。`:`${name}の管理対象はこの取引に含まれません。`,`名前が似た帳簿ではなく、実際にどの勘定が動いたかで判定します。`,ledgerSamples[name]?name:null));}}
+
+// B. 5要素分類 25問
+const classifications={"資産":["現金","当座預金","売掛金","受取手形","商品","備品","建物","前払費用","未収収益"],"負債":["買掛金","支払手形","借入金","未払費用","前受収益"],"純資産":["資本金","繰越利益剰余金"],"収益":["売上","受取利息","受取家賃"],"費用":["仕入","給料","水道光熱費","支払利息","減価償却費","保険料"]};
+let cid=1;for(const [ans,arr] of Object.entries(classifications)){for(const acct of arr){questions.push(q(`C${cid++}`,"勘定科目の分類",`「${acct}」は5要素のどれか。`,`勘定科目を財務諸表上の性質で分類します。`,"single",["資産","負債","純資産","収益","費用"],ans,[`${acct}が会社に何を表すか考える。`,`将来の価値・義務・元手・もうけ・消費のどれかに当てはめる。`,`「${acct}」は ${ans}。`],`${acct}は「${ans}」に分類されます。`,`借方・貸方の位置を丸暗記する前に、5要素で意味をつかみます。`));}}
+
+// C. 経過勘定 24問
+const periods=[
+ {kind:"前払費用",base:"保険料",monthsPaid:12,used:6,dir:"expense-prepaid"},
+ {kind:"前払費用",base:"家賃",monthsPaid:12,used:4,dir:"expense-prepaid"},
+ {kind:"未払費用",base:"支払利息",dir:"expense-accrued"},
+ {kind:"未払費用",base:"給料",dir:"expense-accrued"},
+ {kind:"未収収益",base:"受取利息",dir:"revenue-accrued"},
+ {kind:"未収収益",base:"受取家賃",dir:"revenue-accrued"},
+ {kind:"前受収益",base:"受取家賃",monthsPaid:12,used:7,dir:"revenue-deferred"},
+ {kind:"前受収益",base:"受取手数料",monthsPaid:12,used:5,dir:"revenue-deferred"}
+];
+let pid=1;
+for(let i=0;i<3;i++) for(const p of periods){
+  const amount=(i+2)*60000;
+  let adjust=0, trans="", entry="", ans="";
+  if(p.dir==='expense-prepaid'||p.dir==='revenue-deferred'){const remain=p.monthsPaid-p.used;adjust=amount*remain/p.monthsPaid;trans=`当期に1年分 ¥${fmt(amount)} を処理済み。決算日現在、${remain}か月分が翌期に対応する。`;ans=String(adjust);entry=p.dir==='expense-prepaid'?`（借）${p.kind} ${fmt(adjust)} ／（貸）${p.base} ${fmt(adjust)}`:`（借）${p.base} ${fmt(adjust)} ／（貸）${p.kind} ${fmt(adjust)}`;}
+  else {adjust=(i+1)*3000;trans=`決算日に、当期分 ¥${fmt(adjust)} がまだ未処理であることが判明した。`;ans=String(adjust);entry=p.dir==='expense-accrued'?`（借）${p.base} ${fmt(adjust)} ／（貸）${p.kind} ${fmt(adjust)}`:`（借）${p.kind} ${fmt(adjust)} ／（貸）${p.base} ${fmt(adjust)}`;}
+  questions.push(q(`P${pid++}`,"経過勘定",`${p.kind}として計上する金額を選択しなさい。`,trans,"number",null,ans,[`当期と翌期のどちらに対応するかを分ける。`,p.monthsPaid?`月割りで翌期対応分を計算する。`:`未処理の当期分をそのまま計上する。`,`決算整理仕訳：${entry}`],`正解は ¥${fmt(adjust)}。${p.kind}は${p.kind.includes('費用')?'費用の期間配分':'収益の期間配分'}に使います。`,`前払・前受は「すでに払った／受け取った」、未払・未収は「まだ払っていない／受け取っていない」と整理します。`));
+}
+
+// D. 移動平均法 18問
+let mid=1;for(let i=0;i<9;i++){
+ const q1=10+i,u1=400+i*20,q2=10+i,u2=600+i*20;const total=q1*u1+q2*u2;const qty=q1+q2;const avg=total/qty;
+ const sold=5+(i%4);const cost=avg*sold;
+ questions.push(q(`M${mid++}`,"商品有高帳・移動平均法","仕入後の移動平均単価を選択しなさい。",`期首在庫 ${q1}個（@¥${u1}）。その後 ${q2}個（@¥${u2}）を仕入れた。`,"number",null,String(avg),[`在庫金額：${q1}×${u1}=¥${fmt(q1*u1)}。`,`仕入金額：${q2}×${u2}=¥${fmt(q2*u2)}。`,`合計金額 ¥${fmt(total)} ÷ 合計数量 ${qty}個 = @¥${fmt(avg)}。`],`移動平均法では仕入れる都度、在庫総額÷在庫数量で平均単価を更新します。`,`売価は使いません。商品有高帳は原価で計算します。`,"商品有高帳"));
+ questions.push(q(`M${mid++}`,"商品有高帳・移動平均法","この払出原価を選択しなさい。",`上記の仕入後、商品を ${sold}個払い出した。移動平均単価は @¥${avg}。`,"number",null,String(cost),[`払出直前の平均単価を確認する：@¥${avg}。`,`払出数量 ${sold}個を掛ける。`,`¥${avg}×${sold}=¥${fmt(cost)}。`],`正解は ¥${fmt(cost)}。`,`平均単価を売るたびに再計算するのではなく、新たな仕入れがあったときに更新します。`,"商品有高帳"));
+}
+
+// E. 先入先出法 12問
+let fid=1;for(let i=0;i<6;i++){
+ const q1=8+i,u1=400+i*50,q2=10+i,u2=600+i*50,sold=q1+2;const cost=q1*u1+2*u2;const remain=(q2-2)*u2;
+ questions.push(q(`F${fid++}`,"商品有高帳・先入先出法","払出原価を選択しなさい。",`在庫 ${q1}個（@¥${u1}）の後に ${q2}個（@¥${u2}）を仕入れ、その後 ${sold}個を払い出した。`,"number",null,String(cost),[`古い在庫 ${q1}個を先に払出す：¥${fmt(q1*u1)}。`,`不足する2個を新しい仕入分から払出す：¥${fmt(2*u2)}。`,`合計 ¥${fmt(cost)}。`],`先入先出法は「先に入った原価から先に出す」と考えます。`,`数量だけでなく、どの単価の層が何個残るかを線で消して考えると安定します。`,"商品有高帳"));
+ questions.push(q(`F${fid++}`,"商品有高帳・先入先出法","期末商品の金額を選択しなさい。",`在庫 ${q1}個（@¥${u1}）の後に ${q2}個（@¥${u2}）を仕入れ、その後 ${sold}個を払い出した。`,"number",null,String(remain),[`古い在庫 ${q1}個はすべて払出し済み。`,`新しい仕入分から2個を払出す。`,`残る ${q2-2}個 × @¥${u2}=¥${fmt(remain)}。`],`期末在庫は新しい仕入分から構成されています。`,`「最新単価だけが必ず残る」と暗記せず、数量層を追ってください。`,"商品有高帳"));
+}
+
+// F. 決算・再振替・固定資産 24問
+let did=1;const closing=[
+ ["費用勘定を締め切るときの振替先は？",["損益","次期繰越","繰越利益剰余金"],"損益","費用・収益は損益へ集める。"],
+ ["収益勘定を締め切るときの振替先は？",["損益","次期繰越","資本金"],"損益","費用・収益は損益へ集める。"],
+ ["資産勘定を締め切るときの基本的な表示は？",["次期繰越","損益","当期純利益"],"次期繰越","資産・負債・純資産は翌期へ繰り越す。"],
+ ["前期末に（借）保険料／（貸）前払費用の再振替ではどうする？",["前期末仕訳と同じ","前期末仕訳を逆にする","何もしない"],"前期末仕訳を逆にする","再振替は前期末の決算整理仕訳の逆仕訳。"],
+ ["当期純利益を繰越利益剰余金へ振り替える場合、繰越利益剰余金は？",["借方","貸方","記入しない"],"貸方","利益は純資産を増加させる。"]
+];
+for(let r=0;r<3;r++) for(const [title,opts,ans,pt] of closing){questions.push(q(`D${did++}`,"決算・再振替",title,"決算の流れを思い出して答えます。","single",opts,ans,[`対象が一時勘定か永久勘定かを確認する。`,`決算整理と決算振替を区別する。`,`${pt}`],pt,`「次期繰越」と「損益」の使い分けを混同しないこと。`));}
+for(let i=0;i<9;i++){
+ const cost=120000+(i*30000),life=4+(i%3),salv=0,annual=(cost-salv)/life;
+ if(!Number.isInteger(annual))continue;
+ questions.push(q(`D${did++}`,"固定資産・減価償却","定額法による1年分の減価償却費を選択しなさい。",`取得原価 ¥${fmt(cost)}、残存価額0、耐用年数${life}年。`,"number",null,String(annual),[`償却対象額：¥${fmt(cost)}。`,`定額法：償却対象額÷耐用年数。`,`¥${fmt(cost)}÷${life}=¥${fmt(annual)}。`],`1年分の減価償却費は ¥${fmt(annual)}。`,`月割り指定がある場合は、さらに使用月数/12を掛けます。`));
+}
+
+
+// G. 伝票会計 24問
+let tid=1;
+const voucherCases=[
+ {text:"商品 ¥100,000 を仕入れ、¥30,000は現金で支払い、残額は掛けとした。",split:"振替伝票には掛け部分 ¥70,000 を起票する。",decomp:"振替伝票には仕入総額 ¥100,000 を起票する。"},
+ {text:"商品 ¥120,000 を売り上げ、¥20,000は現金で受け取り、残額は掛けとした。",split:"振替伝票には掛け部分 ¥100,000 を起票する。",decomp:"振替伝票には売上総額 ¥120,000 を起票する。"},
+ {text:"備品 ¥90,000 を購入し、¥10,000を現金で支払い、残額は未払とした。",split:"振替伝票には未払部分 ¥80,000 を起票する。",decomp:"振替伝票には備品総額 ¥90,000 を起票する。"}
+];
+for(let r=0;r<4;r++) for(const c of voucherCases){
+ questions.push(q(`T${tid++}`,"伝票会計","分割法では振替伝票にどの金額を起票するか。",c.text,"single",["取引総額","現金部分のみ","掛け・未払部分のみ"],"掛け・未払部分のみ",["一部現金取引を現金部分とそれ以外にそのまま分ける。",c.split,"したがって振替伝票は掛け・未払部分のみ。"],"分割法は取引をそのまま分けます。","分解法と名前が似ています。『分割＝そのまま分ける』で整理します。"));
+ questions.push(q(`T${tid++}`,"伝票会計","分解法では振替伝票にどの金額を起票するか。",c.text,"single",["取引総額","現金部分のみ","掛け・未払部分のみ"],"取引総額",["まず全額を掛け・未払取引だったとみなす。",c.decomp,"その後、現金決済部分を入出金伝票で処理する。"],"分解法では振替伝票に総額を起票します。","『分解＝総額を振替＋現金決済』とセットで覚えます。"));
+}
+
+// H. 現金過不足・訂正 20問
+let xid=1;
+for(let i=0;i<5;i++){
+ const diff=(i+1)*1000;
+ questions.push(q(`X${xid++}`,"現金過不足","現金実査額が帳簿残高より少ない。差額を一時処理する勘定は？",`帳簿残高 ¥${fmt(50000+diff)}、実査額 ¥${fmt(50000)}。原因はまだ不明。`,"single",["現金過不足","雑損","雑益","仮払金"],"現金過不足",["実査額の方が少ないので現金を減らす。","原因不明なので相手科目を現金過不足とする。","（借）現金過不足 ／（貸）現金。"],"原因が分かるまで現金過不足で仮処理します。","決算時まで原因不明なら、その時点で雑損・雑益へ振り替えます。"));
+ questions.push(q(`X${xid++}`,"現金過不足","決算時まで原因不明の現金不足は最終的に何で処理する？",`現金過不足勘定に借方残高 ¥${fmt(diff)} が残っている。`,"single",["雑損","雑益","現金","売上"],"雑損",["現金不足なので会社に損失が生じている。","原因不明のまま決算を迎えた。","現金過不足の借方残高を雑損へ振り替える。"],"不足は雑損です。","過剰なら雑益になります。"));
+ questions.push(q(`X${xid++}`,"現金過不足","決算時まで原因不明の現金過剰は最終的に何で処理する？",`現金過不足勘定に貸方残高 ¥${fmt(diff)} が残っている。`,"single",["雑損","雑益","現金","仕入"],"雑益",["現金過剰なので会社に利益相当が生じている。","原因不明のまま決算を迎えた。","現金過不足の貸方残高を雑益へ振り替える。"],"過剰は雑益です。","不足＝雑損、過剰＝雑益を方向で理解します。"));
+ questions.push(q(`X${xid++}`,"訂正仕訳","誤って備品購入を仕入として記帳した。訂正でまず減らす科目は？",`備品 ¥${fmt(20000+diff)} を現金購入したが、（借）仕入／（貸）現金と記帳した。`,"single",["仕入","備品","現金","売上"],"仕入",["正しい仕訳は（借）備品／（貸）現金。","誤仕訳で仕入が増えているため、まず仕入を取り消す。","（借）備品 ／（貸）仕入 と訂正する。"],"誤って増やした仕入を貸方で減らします。","現金は誤仕訳でも正しく貸方処理されているため、もう一度動かしません。"));
+}
+
+// I. 貸倒引当金 18問
+let badid=1;
+for(let i=0;i<9;i++){
+ const receivable=100000+(i*20000), rate=(i%3+1)/100, need=Math.round(receivable*rate), existing=(i%2)*1000, add=Math.max(0,need-existing);
+ questions.push(q(`B${badid++}`,"貸倒引当金","期末に必要な貸倒引当金の金額を選択しなさい。",`売掛金等の期末残高 ¥${fmt(receivable)} に対して ${rate*100}% を設定する。`,"number",null,String(need),["対象債権残高を確認する。","設定率を掛ける。",`¥${fmt(receivable)} × ${rate*100}% = ¥${fmt(need)}。`],`必要額は ¥${fmt(need)}。`,`『必要額』を聞かれている場合は、既存残高との差額ではありません。`));
+ questions.push(q(`B${badid++}`,"貸倒引当金","差額補充法による貸倒引当金繰入額を選択しなさい。",`期末必要額 ¥${fmt(need)}、決算整理前の貸倒引当金残高 ¥${fmt(existing)}。`,"number",null,String(add),["期末に必要な残高を確認する。","既にある貸倒引当金残高を差し引く。",`¥${fmt(need)} − ¥${fmt(existing)} = ¥${fmt(add)}。`],`貸倒引当金繰入は ¥${fmt(add)}。`,`必要額そのものと、当期の繰入額を混同しないこと。`));
+}
+
+// J. 売上原価 18問
+let coid=1;
+for(let i=0;i<9;i++){
+ const begin=20000+i*2000,purch=100000+i*10000,end=25000+i*1500,cogs=begin+purch-end;
+ questions.push(q(`G${coid++}`,"売上原価","売上原価を選択しなさい。",`期首商品 ¥${fmt(begin)}、当期仕入 ¥${fmt(purch)}、期末商品 ¥${fmt(end)}。`,"number",null,String(cogs),["期首商品を当期に販売可能な商品へ加える。","当期仕入を加える。","期末に残った商品を差し引く。",`¥${fmt(begin)}＋¥${fmt(purch)}−¥${fmt(end)}=¥${fmt(cogs)}。`],`売上原価は ¥${fmt(cogs)}。`,`期末商品は『売れなかった分』なので引きます。`));
+ questions.push(q(`G${coid++}`,"売上原価","売上原価の計算式として正しいものは？","決算整理で売上原価を計算します。","single",["期首商品＋当期仕入－期末商品","期末商品＋当期仕入－期首商品","当期仕入－期首商品－期末商品"],"期首商品＋当期仕入－期末商品",["期首にあった商品を足す。","当期に仕入れた商品を足す。","期末に残った商品を引く。"],"期首商品＋当期仕入－期末商品です。","式を暗記するだけでなく、『売れる状態にあった商品－残った商品』と考えます。"));
+}
+
+// K. 消費税（税抜方式） 12問
+let taxid=1;
+for(let i=0;i<6;i++){
+ const base=50000+i*10000,tax=Math.round(base*.10);
+ questions.push(q(`Z${taxid++}`,"消費税・税抜方式","商品を仕入れたときの消費税部分に用いる科目は？",`本体価格 ¥${fmt(base)}、消費税10% ¥${fmt(tax)} を現金で支払った。税抜方式。`,"single",["仮払消費税","仮受消費税","租税公課","仕入"],"仮払消費税",["仕入時は会社が消費税を支払っている。","税抜方式では本体価格と税額を分ける。","消費税部分は仮払消費税。"],"仕入等で支払った税額は仮払消費税です。","売上時に預かる仮受消費税と逆にしないこと。"));
+ questions.push(q(`Z${taxid++}`,"消費税・税抜方式","商品を売り上げたときの消費税部分に用いる科目は？",`本体価格 ¥${fmt(base)}、消費税10% ¥${fmt(tax)} を現金で受け取った。税抜方式。`,"single",["仮払消費税","仮受消費税","租税公課","売上"],"仮受消費税",["売上時は顧客から消費税を預かっている。","税抜方式では本体価格と税額を分ける。","消費税部分は仮受消費税。"],"売上等で預かった税額は仮受消費税です。","『受け取ったから収益』ではなく、納付まで一時的に預かる負債です。"));
+}
+
+const questionBank=questions;
+
+const STORE='boki3trainer_v2';
+const OLD_STORE='boki3trainer_v1';
+function freshData(){return{answered:0,correct:0,totalTime:0,byCat:{},byQ:{},slowReview:true,history:{},errorReasons:{},sessions:[]}}
+let data=JSON.parse(localStorage.getItem(STORE)||'null');
+if(!data){const old=JSON.parse(localStorage.getItem(OLD_STORE)||'null');data=old?Object.assign(freshData(),old):freshData();}
+data.history ||= {}; data.errorReasons ||= {}; data.sessions ||= []; data.byCat ||= {}; data.byQ ||= {}; if(data.slowReview===undefined)data.slowReview=true;
+let session={mode:null,list:[],index:0,selected:null,start:0,elapsedTimer:null,sessionStart:0,correct:0,reasonRecorded:false,answered:false};
+let deferredPrompt=null;
+function localDateKey(d=new Date()){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
+function dateMinus(n){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-n);return localDateKey(d)}
+function save(){localStorage.setItem(STORE,JSON.stringify(data));updateDashboard();renderReview();}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function nav(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.body.classList.toggle('quiz-mode',id==='quiz');document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));(btn||document.querySelector(`.navbtn[data-screen="${id}"]`))?.classList.add('active');if(id==='review')renderReview();if(id==='home')updateDashboard();if(id==='parent')renderParent();window.scrollTo(0,0);}
+function streakCount(){let n=0,offset=0;if(!(data.history[localDateKey()]?.answered>0))offset=1;for(let i=offset;i<400;i++){if(data.history[dateMinus(i)]?.answered>0)n++;else break;}return n}
+function reviewList(){return questionBank.filter(x=>{const z=data.byQ[x.id];if(!z)return false;const debt=z.reviewDebt!==undefined?z.reviewDebt:(z.wrong||0)+(z.slow||0);return debt>0;});}
+function hash01(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967295;}
+function buildDailyList(){const key=localDateKey();const cats={};for(const [k,v] of Object.entries(data.byCat)){cats[k]=v.seen?v.correct/v.seen:.5}
+ const ranked=questionBank.map(qx=>{const z=data.byQ[qx.id]||{seen:0,wrong:0,slow:0,last:0};const weak=1-(cats[qx.category]??.5);const unseen=z.seen===0?3:0;const debt=z.reviewDebt!==undefined?z.reviewDebt:(z.wrong||0)+(z.slow||0);const review=debt*3;const age=z.last?Math.min(2,(Date.now()-z.last)/86400000/7):1;return{q:qx,score:review+unseen+weak*2+age+hash01(key+qx.id)};}).sort((a,b)=>b.score-a.score);
+ const chosen=[],per={};for(const x of ranked){if((per[x.q.category]||0)>=2)continue;chosen.push(x.q);per[x.q.category]=(per[x.q.category]||0)+1;if(chosen.length===10)break;}if(chosen.length<10)for(const x of ranked){if(!chosen.includes(x.q))chosen.push(x.q);if(chosen.length===10)break;}return chosen;}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b}
+function roundNice(v){if(!Number.isFinite(v))return null;const a=Math.abs(v);let unit=1;if(a>=1000000)unit=10000;else if(a>=100000)unit=5000;else if(a>=10000)unit=1000;else if(a>=1000)unit=500;else if(a>=100)unit=10;return Math.max(0,Math.round(v/unit)*unit)}
+function numberChoices(item){const n=Number(item.answer);if(!Number.isFinite(n))return [String(item.answer)];const mag=Math.abs(n);let step=mag<1000?50:mag<10000?500:mag<100000?1000:mag<500000?5000:10000;const raw=[n,n-step,n+step,n*0.5,n*1.5,n*0.8,n*1.2,n*2];const vals=[];for(const x of raw){const v=roundNice(x);if(v!==null&&v>=0&&!vals.includes(v))vals.push(v);if(vals.length>=5)break;}for(let k=1;vals.length<5;k++){const v=Math.max(0,roundNice(n+step*(k+1)));if(!vals.includes(v))vals.push(v)}if(!vals.includes(n)){vals[0]=n}return shuffle(vals.slice(0,5).map(String))}
+function displayChoice(item,value){return item.type==='number'?'¥'+fmt(value):value}
+let calc={display:'0',stored:null,op:null,waiting:false,afterEquals:false,expr:'',history:[],total:null};
+function resetCalc(keepHistory=false){
+ const history=keepHistory&&calc.history?calc.history:[];
+ calc={display:'0',stored:null,op:null,waiting:false,afterEquals:false,expr:'',history,total:null};
+ updateCalc();renderCalcHistory();
+}
+function toggleCalculator(){const p=document.getElementById('calculatorPanel');const b=document.getElementById('calcToggleBtn');if(!p)return;const open=p.classList.toggle('show');p.setAttribute('aria-hidden',open?'false':'true');if(b)b.textContent=open?'🧮 電卓を閉じる':'🧮 電卓を表示';if(open)document.getElementById('calcDisplay')?.focus()}
+function calcFormat(v){const n=Number(v);if(!Number.isFinite(n))return '0';return n.toLocaleString('ja-JP',{maximumFractionDigits:6})}
+function calcStartNewLineIfNeeded(){if(!calc.afterEquals)return;calc.display='0';calc.stored=null;calc.op=null;calc.waiting=false;calc.afterEquals=false;calc.expr='';calc.total=null;renderCalcHistory();}
+function calcDigit(x){calcStartNewLineIfNeeded();if(calc.waiting||calc.display==='0'){calc.display=x;calc.waiting=false}else if(calc.display.replace('-','').replace('.','').length<14)calc.display+=x;updateCalc()}
+function calcDot(){calcStartNewLineIfNeeded();if(calc.waiting){calc.display='0';calc.waiting=false}if(!calc.display.includes('.'))calc.display+='.';updateCalc()}
+function calcClear(){const history=calc.history;calc={display:'0',stored:null,op:null,waiting:false,afterEquals:false,expr:'',history,total:null};updateCalc();renderCalcHistory()}
+function calcClearHistory(){calc={display:'0',stored:null,op:null,waiting:false,afterEquals:false,expr:'',history:[],total:null};updateCalc();renderCalcHistory()}
+function calcBack(){if(calc.afterEquals||calc.waiting)return;calc.display=calc.display.length>1?calc.display.slice(0,-1):'0';updateCalc()}
+function calcPercent(){calcStartNewLineIfNeeded();calc.display=String(Number(calc.display||0)/100);updateCalc()}
+function calcOp(op){
+ if(calc.afterEquals){const last=Number(calc.display||0);calc.stored=last;calc.expr=calcFormat(last);calc.op=op;calc.waiting=true;calc.afterEquals=false;calc.total=null;renderCalcHistory();updateCalc();return;}
+ const v=Number(calc.display||0);
+ if(calc.stored===null){calc.stored=v;calc.expr=calcFormat(v);}
+ else if(calc.op&&!calc.waiting){const r=calcCompute(calc.stored,v,calc.op);calc.expr+=` ${calc.op} ${calcFormat(v)}`;calc.stored=r;calc.display=String(r);}
+ calc.op=op;calc.waiting=true;calc.total=null;updateCalc();
+}
+function calcEquals(){
+ if(calc.afterEquals)return;
+ const v=Number(calc.display||0);
+ let expression='',result=v;
+ if(calc.stored!==null&&calc.op){expression=`${calc.expr} ${calc.op} ${calcFormat(v)}`;result=calcCompute(calc.stored,v,calc.op);}
+ else expression=calcFormat(v);
+ calc.history.push({expression,result});
+ calc.display=String(result);calc.stored=null;calc.op=null;calc.waiting=true;calc.afterEquals=true;calc.expr='';calc.total=null;
+ updateCalc();renderCalcHistory();
+}
+function calcCompute(a,b,op){let r=op==='+'?a+b:op==='-'?a-b:op==='×'?a*b:(b===0?0:a/b);return Number.isFinite(r)?Math.round((r+Number.EPSILON)*1000000)/1000000:0}
+function calcSumHistory(){if(!calc.history.length)return;calc.total=Math.round((calc.history.reduce((sum,row)=>sum+Number(row.result||0),0)+Number.EPSILON)*1000000)/1000000;renderCalcHistory()}
+function renderCalcHistory(){
+ const box=document.getElementById('calcHistory');if(box){box.innerHTML=calc.history.length?calc.history.map((row,i)=>`<div class="calc-history-row"><span class="calc-history-no">${i+1}</span><span class="calc-history-exp">${esc(row.expression)} =</span><span class="calc-history-result">${calcFormat(row.result)}</span></div>`).join(''):'<div class="calc-history-empty">「＝」を押すと、計算結果がここに1行ずつ残ります。</div>';}
+ const total=document.getElementById('calcTotal');if(total){total.classList.toggle('show',calc.total!==null);total.innerHTML=calc.total!==null?`<span>確定した各行の合計</span><span>¥ ${calcFormat(calc.total)}</span>`:'';}
+ const btn=document.getElementById('calcSumBtn');if(btn)btn.disabled=!calc.history.length;
+}
+function updateCalc(){
+ const d=document.getElementById('calcDisplay');if(d)d.textContent=calcFormat(calc.display);
+ const e=document.getElementById('calcLiveExpression');if(e){let text=calc.expr;if(calc.op)text+=(text?' ':'')+calc.op;if(!calc.waiting&&calc.stored!==null&&calc.op)text+=` ${calcFormat(calc.display)}`;e.textContent=text||'新しい計算';}
+}
+function startMode(mode,customList=null){let list=[];if(customList)list=customList;else if(mode==='daily')list=buildDailyList();else if(mode==='speed') list=shuffle(questionBank.filter(x=>x.type==='single')).slice(0,10);else if(mode==='structure') list=shuffle(questionBank).slice(0,10);else if(mode==='cbt') list=shuffle(questionBank).slice(0,15);else {const weak=questionBank.map(x=>({q:x,s:data.byQ[x.id]||{wrong:0,slow:0,seen:0,reviewDebt:0}})).sort((a,b)=>(((b.s.reviewDebt??((b.s.wrong||0)+(b.s.slow||0)))*3)-b.s.seen*.03)-(((a.s.reviewDebt??((a.s.wrong||0)+(a.s.slow||0)))*3)-a.s.seen*.03)).slice(0,40).map(x=>x.q);list=shuffle(weak).slice(0,10);}
+ session={mode,list,index:0,selected:null,start:0,elapsedTimer:null,sessionStart:Date.now(),correct:0,reasonRecorded:false,answered:false};nav('quiz');renderQuestion();}
+function renderQuestion(){clearInterval(session.elapsedTimer);if(session.index>=session.list.length){renderComplete();return;}const item=session.list[session.index];session.selected=null;session.reasonRecorded=false;session.answered=false;session.start=Date.now();resetCalc();document.getElementById('progressText').textContent=`${session.index+1} / ${session.list.length}`;document.getElementById('modeToolbar').innerHTML=`<span class="pill active">${({daily:'今日の10問',speed:'瞬間ドリル',structure:'構造理解',cbt:'CBT演習',weak:'苦手だけ'})[session.mode]}</span><span class="pill">${item.category}</span>`;document.getElementById('timerText').textContent='00:00';session.elapsedTimer=setInterval(()=>{const s=Math.floor((Date.now()-session.start)/1000);document.getElementById('timerText').textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`},500);
+ const opts=item.type==='number'?numberChoices(item):shuffle(item.options||[]);const ans=`<div id="answerChoices" class="answers" role="group" aria-label="回答の選択肢">${opts.map(o=>`<button type="button" class="choice" data-value="${esc(o)}" onclick="submitChoice(this)">${esc(displayChoice(item,o))}</button>`).join('')}</div>`;
+ const calcHtml=`<div class="calc-toggle-row"><button type="button" class="calc-toggle" id="calcToggleBtn" onclick="toggleCalculator()">🧮 電卓を表示</button></div><div id="calculatorPanel" class="calculator-panel" aria-hidden="true"><div id="calcHistory" class="calc-history"><div class="calc-history-empty">「＝」を押すと、計算結果がここに1行ずつ残ります。</div></div><div id="calcTotal" class="calc-total"></div><div class="calc-live"><div id="calcLiveExpression" class="calc-live-expression">新しい計算</div><div id="calcDisplay" class="calc-display" tabindex="-1">0</div></div><div class="calc-grid"><button type="button" class="calc-key op" onclick="calcClear()">C</button><button type="button" class="calc-key op" onclick="calcBack()">⌫</button><button type="button" class="calc-key op" onclick="calcPercent()">%</button><button type="button" class="calc-key op" onclick="calcOp('÷')">÷</button><button type="button" class="calc-key" onclick="calcDigit('7')">7</button><button type="button" class="calc-key" onclick="calcDigit('8')">8</button><button type="button" class="calc-key" onclick="calcDigit('9')">9</button><button type="button" class="calc-key op" onclick="calcOp('×')">×</button><button type="button" class="calc-key" onclick="calcDigit('4')">4</button><button type="button" class="calc-key" onclick="calcDigit('5')">5</button><button type="button" class="calc-key" onclick="calcDigit('6')">6</button><button type="button" class="calc-key op" onclick="calcOp('-')">−</button><button type="button" class="calc-key" onclick="calcDigit('1')">1</button><button type="button" class="calc-key" onclick="calcDigit('2')">2</button><button type="button" class="calc-key" onclick="calcDigit('3')">3</button><button type="button" class="calc-key op" onclick="calcOp('+')">＋</button><button type="button" class="calc-key" onclick="calcDigit('0')">0</button><button type="button" class="calc-key" onclick="calcDigit('00')">00</button><button type="button" class="calc-key" onclick="calcDot()">.</button><button type="button" class="calc-key eq" onclick="calcEquals()">＝</button></div><div class="calc-footer-actions"><button type="button" class="calc-total-btn" id="calcSumBtn" onclick="calcSumHistory()" disabled>Σ 合計</button><button type="button" class="calc-clear-history" onclick="calcClearHistory()">履歴を消す</button></div><div class="calc-hint">「＝」で1行確定。次に数字を押すと新しい計算が始まります。「Σ 合計」で確定済みの各行結果を合算します。</div></div>`;
+ document.getElementById('questionCard').innerHTML=`<span class="cat">${esc(item.category)}</span><div class="qtitle">${linkTerms(item.title)}</div><div class="transaction">${linkTerms(item.transaction)}</div>${calcHtml}<div class="multi-note">答えだと思う選択肢をタップすると、その場で回答が確定します。選択肢の順番は毎回変わります。</div>${ans}<div class="actions"><button class="btn dontknow" id="unknownBtn" onclick="submitAnswer('',true,this)">分からない</button><button class="btn secondary" onclick="goHome()">中断</button></div><div class="feedback" id="feedback"></div>`;resetCalc();}
+function submitChoice(btn){submitAnswer(btn?.dataset?.value||'',false,btn)}
+function submitAnswer(user='',unknown=false,clicked=null){if(session.answered)return;session.answered=true;const item=session.list[session.index];session.selected=unknown?null:user;clearInterval(session.elapsedTimer);const sec=(Date.now()-session.start)/1000;const ok=!unknown&&String(user)===String(item.answer);if(ok)session.correct++;data.answered++;if(ok)data.correct++;data.totalTime+=sec;
+ data.byCat[item.category] ||= {seen:0,correct:0,time:0};data.byCat[item.category].seen++;data.byCat[item.category].correct+=ok?1:0;data.byCat[item.category].time+=sec;
+ data.byQ[item.id] ||= {seen:0,correct:0,wrong:0,slow:0,last:0,reasons:{},reviewDebt:0};const qs=data.byQ[item.id];qs.reasons ||= {};if(qs.reviewDebt===undefined)qs.reviewDebt=(qs.wrong||0)+(qs.slow||0);qs.seen++;qs.correct+=ok?1:0;if(!ok){qs.wrong++;qs.reviewDebt+=2;}else if(data.slowReview&&sec>15){qs.slow++;qs.reviewDebt+=1;}else{qs.reviewDebt=Math.max(0,qs.reviewDebt-1);}qs.last=Date.now();
+ const dk=localDateKey();data.history[dk] ||= {answered:0,correct:0,time:0,sessions:0};data.history[dk].answered++;data.history[dk].correct+=ok?1:0;data.history[dk].time+=sec;save();
+ const buttons=[...document.querySelectorAll('#answerChoices .choice')];buttons.forEach(b=>{b.disabled=true;const v=b.dataset.value;if(String(v)===String(item.answer))b.classList.add('correct');});if(clicked&&clicked.classList.contains('choice')&&!ok)clicked.classList.add('incorrect');const unknownBtn=document.getElementById('unknownBtn');if(unknownBtn)unknownBtn.disabled=true;
+ if(unknown){data.errorReasons['分からない']=(data.errorReasons['分からない']||0)+1;const z=data.byQ[item.id];z.reasons ||= {};z.reasons['分からない']=(z.reasons['分からない']||0)+1;save();}
+ const slow=ok&&sec>15&&data.slowReview;const reasonHtml=!ok&&!unknown?`<div class="reason-box"><b>なぜ間違えた？（1つタップ）</b><div class="reason-grid">${['意味・分類','借方・貸方','計算','読み違い','操作ミス'].map(r=>`<button class="reason-btn" onclick="recordReason('${item.id}','${r}',this)">${r}</button>`).join('')}</div></div>`:'';
+ document.getElementById('feedback').classList.add('show');document.getElementById('feedback').innerHTML=`<div class="result-banner ${ok?'good':'bad'}">${ok?'○ 正解':unknown?'△ 分からない':'× 不正解'}　${sec.toFixed(1)}秒 ${slow?'<span class="badge review-badge">要復習</span>':''}</div>${!ok?`<div class="exp"><h4>正解</h4><div>${item.type==='number'?'¥'+fmt(item.answer):esc(item.answer)}</div></div>`:''}${reasonHtml}<div class="exp"><h4>【考え方の流れ】</h4><div class="think-flow">${item.flow.map((x,i)=>`<div class="think-step"><b>${i+1}</b><div>${linkTerms(x)}</div></div>`).join('')}</div></div><div class="exp"><h4>【正解へのポイント】</h4><div>${linkTerms(item.point)}</div></div><div class="exp"><h4>【ひっかけ・注意点】</h4><div>${linkTerms(item.caution)}</div></div>${item.ledger?`<button class="btn ghost ledger-btn" onclick="showLedger('${item.ledger}')">実際の「${item.ledger}」で確認</button>`:''}<div class="actions"><button class="btn primary" onclick="nextQuestion()">${session.index+1===session.list.length?'結果を見る':'次の問題へ'}</button></div>`;}
+function recordReason(id,reason,btn){if(session.reasonRecorded)return;session.reasonRecorded=true;data.errorReasons[reason]=(data.errorReasons[reason]||0)+1;const z=data.byQ[id]||(data.byQ[id]={seen:0,correct:0,wrong:0,slow:0,last:Date.now(),reasons:{}});z.reasons ||= {};z.reasons[reason]=(z.reasons[reason]||0)+1;btn.parentElement.querySelectorAll('.reason-btn').forEach(x=>x.disabled=true);btn.classList.add('done');save();}
+function nextQuestion(){session.index++;renderQuestion();}
+function renderComplete(){clearInterval(session.elapsedTimer);const total=session.list.length;const pct=Math.round(session.correct/total*100);const secs=Math.round((Date.now()-session.sessionStart)/1000);const dk=localDateKey();data.history[dk] ||= {answered:0,correct:0,time:0,sessions:0};data.history[dk].sessions=(data.history[dk].sessions||0)+1;data.sessions.push({date:dk,mode:session.mode,total,correct:session.correct,seconds:secs});if(data.sessions.length>100)data.sessions=data.sessions.slice(-100);localStorage.setItem(STORE,JSON.stringify(data));const again=session.mode==='daily'?'別の10問':(session.mode==='cbt'?'もう15問':'もう10問');document.getElementById('questionCard').innerHTML=`<div class="complete"><div class="big">${session.correct}/${total}</div><h2>学習終了</h2><p>正答率 ${pct}% ・ ${Math.floor(secs/60)}分${secs%60}秒</p><div class="parent-tip">${pct>=90?'よく定着しています。次は回答速度も意識しましょう。':pct>=70?'あと少し。間違えた問題は復習リストに自動で入りました。':'今日は理解を優先。解説を見た問題をもう一度復習すると効果的です。'}</div><div class="actions"><button class="btn primary" onclick="startMode('${session.mode==='daily'?'weak':session.mode}')">${again}</button><button class="btn secondary" onclick="goHome()">ホームへ</button></div></div>`;document.getElementById('timerText').textContent='終了';updateDashboard();}
+function goHome(){clearInterval(session.elapsedTimer);nav('home');}
+function updateDashboard(){const today=data.history[localDateKey()]||{answered:0,correct:0,time:0};document.getElementById('stToday').textContent=today.answered;document.getElementById('stAccuracy').textContent=data.answered?Math.round(data.correct/data.answered*100)+'%':'0%';document.getElementById('stAvg').textContent=data.answered?(data.totalTime/data.answered).toFixed(1)+'秒':'--';document.getElementById('stStreak').textContent=streakCount()+'日';const remain=Math.max(0,10-today.answered);document.getElementById('dailyMsg').innerHTML=today.answered>=10?`<span class="today-progress">今日 ${today.answered}問達成。</span> 続けるなら苦手問題を復習できます。`:`今日はあと <span class="today-progress">${remain}問</span> で10問。苦手・復習・未出題から自動選定します。`;
+ const allCats=[...new Set(questionBank.map(x=>x.category))];document.getElementById('weakList').innerHTML=allCats.map(c=>{const v=data.byCat[c];const p=v&&v.seen?Math.round(v.correct/v.seen*100):null;return `<div class="weak-row"><span>${c}</span><div class="bar"><i style="width:${p===null?0:p}%"></i></div><b>${p===null?'--':p+'%'}</b></div>`}).join('');document.getElementById('bankCount').textContent=`全 ${questionBank.length} 問（自動生成を含む）`;document.getElementById('slowSwitch').classList.toggle('on',data.slowReview);}
+function renderReview(){const list=reviewList().sort((a,b)=>{const x=data.byQ[a.id],y=data.byQ[b.id];return (y.reviewDebt??((y.wrong||0)+(y.slow||0)))-(x.reviewDebt??((x.wrong||0)+(x.slow||0)))});const box=document.getElementById('reviewList');if(!list.length){box.innerHTML='<div class="empty">まだ復習問題はありません。間違えた問題や15秒を超えた正解がここに入ります。</div>';return;}box.innerHTML=`<div class="small" style="margin-bottom:10px">${list.length}問が復習対象です。</div>${list.slice(0,20).map(x=>{const s=data.byQ[x.id];return `<div class="settings-row"><div><b>${x.category}</b><div class="small">${esc(x.title)}　誤答${s.wrong} / 遅い正解${s.slow} / 復習度${s.reviewDebt??((s.wrong||0)+(s.slow||0))}</div></div><button class="pill" onclick="startMode('weak',[questionBank.find(q=>q.id==='${x.id}')])">解く</button></div>`}).join('')}<div style="margin-top:12px"><button class="btn primary" onclick="startMode('weak',shuffle(reviewList()).slice(0,10))">復習10問を開始</button></div>`;}
+
+function masteryFor(v){if(!v||!v.seen)return['未着手','m0'];const p=v.correct/v.seen,avg=v.time/v.seen;if(v.seen>=5&&p>=.9&&avg<=15)return['定着','m3'];if(p>=.75)return['練習中','m2'];return['要復習','m1'];}
+function renderParent(){const today=data.history[localDateKey()]||{answered:0,correct:0,time:0};document.getElementById('pStreak').textContent=streakCount()+'日';document.getElementById('pToday').textContent=today.answered+'問';const days=[0,1,2,3,4,5,6].map(dateMinus).reverse();let a=0,c=0;for(const d of days){a+=data.history[d]?.answered||0;c+=data.history[d]?.correct||0;}document.getElementById('p7Acc').textContent=a?Math.round(c/a*100)+'%':'--';document.getElementById('pReview').textContent=reviewList().length+'問';
+ document.getElementById('weekReport').innerHTML=`<table class="report-table"><tr><th>日</th><th>問題</th><th>正答率</th><th>平均</th></tr>${days.map(d=>{const h=data.history[d]||{answered:0,correct:0,time:0};return `<tr><td>${d.slice(5).replace('-','/')}</td><td>${h.answered}</td><td>${h.answered?Math.round(h.correct/h.answered*100)+'%':'--'}</td><td>${h.answered?(h.time/h.answered).toFixed(1)+'秒':'--'}</td></tr>`}).join('')}</table>`;
+ const reasons=Object.entries(data.errorReasons).sort((a,b)=>b[1]-a[1]);document.getElementById('reasonReport').innerHTML=reasons.length?reasons.map(([r,n])=>`<div class="settings-row"><span>${r}</span><b>${n}回</b></div>`).join(''):'<div class="empty">まだ誤答理由の記録はありません。</div>';
+ const cats=[...new Set(questionBank.map(x=>x.category))];document.getElementById('parentCategoryReport').innerHTML=cats.map(cat=>{const v=data.byCat[cat],m=masteryFor(v),p=v?.seen?Math.round(v.correct/v.seen*100):null;return `<div class="settings-row"><div><b>${cat}</b><div class="small">${v?.seen||0}問回答 ${p===null?'':`・正答率${p}% ・平均${(v.time/v.seen).toFixed(1)}秒`}</div></div><span class="mastery ${m[1]}">${m[0]}</span></div>`}).join('');
+ let tip='正答率より、毎日短く続けることを優先してください。';if(reasons[0])tip=`最も多いつまずきは「${reasons[0][0]}」です。次回はこの点だけ声をかけると効果的です。`;document.getElementById('parentTip').textContent=tip;}
+
+function toggleSlow(){data.slowReview=!data.slowReview;save();}
+function resetStats(){if(confirm('この端末の学習履歴をすべて消しますか？')){data=freshData();save();renderParent();}}
+function linkTerms(text){
+ const raw=String(text??'');
+ const terms=Object.keys(glossary).sort((a,b)=>b.length-a.length);
+ if(!terms.length)return esc(raw);
+ const pattern=terms.map(term=>term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+ const re=new RegExp(pattern,'g');
+ let out='',last=0;
+ raw.replace(re,(match,offset)=>{
+   out+=esc(raw.slice(last,offset));
+   out+=`<span class="term-link" data-term="${esc(match)}" onclick="showTerm(this.dataset.term)">${esc(match)}</span>`;
+   last=offset+match.length;
+   return match;
+ });
+ out+=esc(raw.slice(last));
+ return out;
+}
+function showGlossary(){document.getElementById('glossaryModal').classList.add('show');renderGlossaryList();}
+function renderGlossaryList(){const q=(document.getElementById('glossarySearch')?.value||'').trim();const keys=Object.keys(glossary).filter(k=>!q||k.includes(q)||glossary[k].desc.includes(q));document.getElementById('glossaryContent').innerHTML=`<div class="glossary-list">${keys.map(k=>`<div class="glossary-item" onclick="showTerm('${k}')"><span class="tag">${glossary[k].cat}</span><br><b>${k}</b><div class="small">${glossary[k].desc}</div></div>`).join('')}</div>`;}
+function showTerm(term){const g=glossary[term];document.getElementById('glossaryModal').classList.add('show');document.getElementById('glossaryContent').innerHTML=`<span class="tag">${g.cat}</span><h2 style="margin:4px 0 8px">${term}</h2><p>${g.desc}</p><div class="exp"><h4>試験での見分け方</h4><div>${g.point}</div></div><button class="btn secondary" onclick="renderGlossaryList()">一覧へ戻る</button>`;}
+function showLedger(name){document.getElementById('ledgerTitle').textContent=`実際の「${name}」`;document.getElementById('ledgerBody').innerHTML=(ledgerSamples[name]?.()||'<p>サンプル準備中</p>')+`<div class="exp"><h4>見る場所</h4><div>問題文の取引が、帳簿のどの列・どちら側に記録されるかを確認してください。</div></div>`;document.getElementById('ledgerModal').classList.add('show');}
+function hideModal(e,id){if(e&&e.target!==e.currentTarget)return;document.getElementById(id).classList.remove('show');}
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='inline-block';document.getElementById('installNote').classList.add('show');});
+document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').style.display='none';});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));}
+updateDashboard();renderReview();
+</script>
+<script src="unified.js"></script></body>
+</html>

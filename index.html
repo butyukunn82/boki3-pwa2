@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="app-v20.css">
+<title>日商簿記3級トレーナー</title>
+</head>
+<body class="app-v20 app-home">
+<div class="u-app">
+<header class="u-top">
+  <div class="app-brand-row" style="padding:0">
+    <div class="app-logo">📖</div>
+    <div><div class="app-brand-title">日商簿記<em>3級</em>トレーナー</div><div class="app-brand-sub">やさしく学んで、しっかり合格！</div></div>
+  </div>
+  <a href="settings.html" aria-label="設定">⚙</a>
+</header>
+<main class="u-page">
+  <section class="app-dashboard" aria-label="今日の学習状況">
+    <img class="app-mascot app-mascot--hero" src="assets/mascot.png" alt="学習を応援するキャラクター">
+    <div class="app-dashboard-grid">
+      <div class="app-ring" id="todayRing"><div class="app-ring-content"><small>今日の学習</small><strong><span id="todayCount">0</span>/<span id="dailyGoal">10</span></strong><span>問</span></div></div>
+      <div>
+        <div class="app-dash-stat"><span>正答率</span><b id="allAcc">—</b> <b class="up">↗</b></div>
+        <div class="app-dash-stat"><span>連続学習日数</span><b id="streak">0日</b> 🔥</div>
+      </div>
+    </div>
+    <a id="continueBtn" class="app-continue app-tap" href="learn.html">続きからはじめる ▶</a>
+  </section>
+
+  <div class="app-section-title">問題別に学ぶ</div>
+  <div class="app-main-list">
+    <a class="app-main-card q1 app-tap" href="q1.html"><span class="app-symbol">✎</span><span><strong>第1問　仕訳</strong><small>5要素から仕訳を組み立てる</small></span><span class="go">›</span></a>
+    <a class="app-main-card q2 app-tap" href="q2.html"><span class="app-symbol">▤</span><span><strong>第2問　帳簿・勘定</strong><small>補助簿・元帳・商品有高帳を理解する</small></span><span class="go">›</span></a>
+    <a class="app-main-card q3 app-tap" href="q3.html"><span class="app-symbol">▥</span><span><strong>第3問　決算・精算表</strong><small>決算整理からP/L・B/Sまで</small></span><span class="go">›</span></a>
+    <a class="app-main-card learn app-tap" href="understand.html"><span class="app-symbol">💡</span><span><strong>しくみを理解</strong><small>簿記マップ・数字の旅・論点ラボ</small></span><span class="go">›</span></a>
+  </div>
+
+  <div class="app-section-title">復習・確認</div>
+  <div class="app-support-grid">
+    <a class="app-support-card review app-tap" href="management.html#review"><span style="font-size:1.5rem">↻</span><span><b>復習</b><span>間違えた問題をもう一度</span></span></a>
+    <a class="app-support-card dict app-tap" href="glossary.html"><span style="font-size:1.5rem">▣</span><span><b>辞典</b><span>用語・科目をすぐ確認</span></span></a>
+    <a class="app-support-card manage app-tap" href="management.html"><span style="font-size:1.5rem">▥</span><span><b>学習管理</b><span>進捗・弱点をチェック</span></span></a>
+    <a class="app-support-card settings app-tap" href="settings.html"><span style="font-size:1.5rem">⚙</span><span><b>設定</b><span>文字・配色・問題数</span></span></a>
+  </div>
+</main>
+</div>
+<nav class="u-nav"><div class="u-nav-inner">
+<a class="active" href="index.html"><b>⌂</b>ホーム</a>
+<a href="learn.html"><b>▣</b>学習メニュー</a>
+<a href="management.html#review"><b>↻</b>復習</a>
+<a href="settings.html"><b>•••</b>その他</a>
+</div></nav>
+<script src="unified.js"></script>
+<script>
+function safe(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
+const sets=[safe('boki3_q1_trainer_v1')||{},safe('boki3trainer_v2')||{},safe('boki3_q3_trainer_v1')||{}];
+let ans=0,cor=0;sets.forEach(x=>{ans+=x.answered||0;cor+=x.correct||0});document.getElementById('allAcc').textContent=ans?Math.round(cor/ans*100)+'%':'—';
+const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const dk=dateKey(new Date());let today=0;sets.forEach(x=>today+=(x.history?.[dk]?.answered||0));document.getElementById('todayCount').textContent=today;
+const goal=Number(window.BOKI_SETTINGS?.daily||10);document.getElementById('dailyGoal').textContent=goal;const pct=Math.min(100,Math.round(today/Math.max(1,goal)*100));document.getElementById('todayRing').style.setProperty('--p',pct);
+const days=new Set();sets.forEach(x=>Object.entries(x.history||{}).forEach(([k,v])=>{if((v.answered||0)>0)days.add(k)}));let streak=0;for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);const k=dateKey(d);if(days.has(k))streak++;else if(i===0)continue;else break}document.getElementById('streak').textContent=streak+'日';
+const last=localStorage.getItem('boki3_last_page');if(last){const b=document.getElementById('continueBtn');b.href=last;b.textContent='前回の続きから ▶'}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>

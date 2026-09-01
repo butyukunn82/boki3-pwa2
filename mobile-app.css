@@ -1,0 +1,2 @@
+/* mobile interaction layer */
+button,a{-webkit-touch-callout:none}.app-tap,.topic-button,.choice{touch-action:manipulation}.app-mascot{object-fit:contain;pointer-events:none;user-select:none}.install-note{font-size:.8rem;color:var(--u-muted)}

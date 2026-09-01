@@ -1,2 +1,16 @@
 /* mobile interaction layer */
 button,a{-webkit-touch-callout:none}.app-tap,.topic-button,.choice{touch-action:manipulation}.app-mascot{object-fit:contain;pointer-events:none;user-select:none}.install-note{font-size:.8rem;color:var(--u-muted)}
+
+/* Q2 learning menu: high-contrast, readable buttons */
+.q2-menu{display:grid;gap:10px}
+.q2-menu .topic-button{color:#fff;border:1px solid rgba(16,52,91,.10);box-shadow:0 7px 18px rgba(35,74,119,.16)}
+.q2-menu .topic-button:nth-child(1){background:linear-gradient(120deg,#2f8fdf,#1768b5)}
+.q2-menu .topic-button:nth-child(2){background:linear-gradient(120deg,#25aaa9,#137f91)}
+.q2-menu .topic-button:nth-child(3){background:linear-gradient(120deg,#527fdc,#3659b5)}
+.q2-menu .topic-button:nth-child(4){background:linear-gradient(120deg,#675ecb,#463da5)}
+.q2-menu .topic-button:nth-child(5){background:linear-gradient(120deg,#e2636d,#bd3f4d)}
+.q2-menu .topic-button b{color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.12)}
+.q2-menu .topic-button small{color:#fff;opacity:.96}
+.q2-menu .topic-button .ico{color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.16)}
+.q2-menu .topic-button:after{color:#fff;opacity:.92}
+.q2-menu .topic-button:focus-visible{outline:3px solid #f6c945;outline-offset:3px}

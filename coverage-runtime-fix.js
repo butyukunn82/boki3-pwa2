@@ -1,0 +1,1 @@
+(function(){'use strict';if((location.pathname.split('/').pop()||'').toLowerCase()!=='coverage.html')return;function patch(){if(typeof renderQ!=='function'||renderQ.__timed)return setTimeout(patch,100);const orig=renderQ;const w=function(){started=Date.now();return orig.apply(this,arguments)};w.__timed=true;window.renderQ=w}patch()})();

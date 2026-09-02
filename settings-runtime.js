@@ -1,10 +1,20 @@
 (function(){
 'use strict';
-if(window.BOKI_SETTINGS_API?.version>=2)return;
-const KEY='boki3_unified_settings';
-const DEFAULTS={theme:'standard',font:'standard',size:'standard',motion:'standard',daily:10,masteryTarget:5,masteryAccuracy:80,masteryStreak:3,wrongThreshold:2};
+if(window.BOKI_SETTINGS_API?.version>=3)return;
+const KEY='boki3_unified_settings',MIGRATION_KEY='boki3_settings_schema_v3';
+const DEFAULTS={theme:'contrast',font:'standard',size:'standard',motion:'standard',daily:10,masteryTarget:5,masteryAccuracy:80,masteryStreak:3,wrongThreshold:2};
 const ALLOWED={theme:['standard','gentle','contrast','dark'],font:['standard','rounded','serif'],size:['small','standard','large','xlarge'],motion:['standard','off']};
 function safeParse(s){try{return JSON.parse(s||'{}')||{}}catch(e){return {}}}
+function migrate(raw={}){
+ const next={...raw};
+ if(localStorage.getItem(MIGRATION_KEY)!=='3'){
+  if(!next.theme||next.theme==='standard')next.theme='contrast';
+  if(next.size==='xlarge')next.size='standard';
+  localStorage.setItem(MIGRATION_KEY,'3');
+  try{localStorage.setItem(KEY,JSON.stringify({...DEFAULTS,...next}))}catch(e){}
+ }
+ return next;
+}
 function normalize(raw={}){
  const s={...DEFAULTS,...raw};
  Object.keys(ALLOWED).forEach(k=>{if(!ALLOWED[k].includes(String(s[k])))s[k]=DEFAULTS[k]});
@@ -16,22 +26,26 @@ function normalize(raw={}){
  if(![1,2,3,5].includes(s.wrongThreshold))s.wrongThreshold=2;
  return s;
 }
-function load(){return normalize(safeParse(localStorage.getItem(KEY)))}
+function load(){return normalize(migrate(safeParse(localStorage.getItem(KEY))))}
 function ensureStyle(){
  let st=document.getElementById('boki-settings-runtime-style');if(st)return st;
  st=document.createElement('style');st.id='boki-settings-runtime-style';st.textContent=`
- html[data-boki-size="small"]{font-size:14px!important}html[data-boki-size="standard"]{font-size:16px!important}html[data-boki-size="large"]{font-size:18px!important}html[data-boki-size="xlarge"]{font-size:20px!important}
+ /* 旧「特大」20pxを新しい標準サイズとして再定義 */
+ html[data-boki-size="small"]{font-size:18px!important}
+ html[data-boki-size="standard"]{font-size:20px!important}
+ html[data-boki-size="large"]{font-size:22px!important}
+ html[data-boki-size="xlarge"]{font-size:24px!important}
  body[data-boki-font="standard"]{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif!important}
  body[data-boki-font="rounded"]{font-family:"Hiragino Maru Gothic ProN","Yu Gothic UI","Meiryo",sans-serif!important}
  body[data-boki-font="serif"]{font-family:"Yu Mincho","Hiragino Mincho ProN","HGS明朝E",serif!important}
- html[data-boki-theme="gentle"]{--u-bg:#fff9ef;--u-card:#fffdf8;--u-text:#26343f;--u-muted:#6f756f;--u-line:#eadfce;--u-navy:#365f7b;--u-blue:#5a96c6;--u-good:#34875a;--u-goodbg:#edf8ef;--u-bad:#bc5555;--u-badbg:#fff0ed}
- html[data-boki-theme="contrast"]{--u-bg:#fff;--u-card:#fff;--u-text:#000;--u-muted:#303030;--u-line:#404040;--u-navy:#003f79;--u-blue:#005bbb;--u-good:#006b2e;--u-goodbg:#effff3;--u-bad:#b00020;--u-badbg:#fff0f2}
+ html[data-boki-theme="gentle"]{--u-bg:#fff9ef;--u-card:#fffdf8;--u-text:#26343f;--u-muted:#5d665f;--u-line:#d8cbb6;--u-navy:#244f6e;--u-blue:#2f78b5;--u-good:#287449;--u-goodbg:#edf8ef;--u-bad:#a63e3e;--u-badbg:#fff0ed}
+ html[data-boki-theme="contrast"]{--u-bg:#fff;--u-card:#fff;--u-text:#000;--u-muted:#111;--u-line:#111;--u-navy:#003b70;--u-blue:#0057a8;--u-good:#005c2a;--u-goodbg:#edfff2;--u-bad:#8f0018;--u-badbg:#fff0f2;--u-shadow:none}
  html[data-boki-theme="dark"]{--u-bg:#0e1620;--u-card:#18222e;--u-text:#f2f6fa;--u-muted:#b6c0ca;--u-line:#3a4857;--u-navy:#8fc8ff;--u-blue:#61aff4;--u-good:#72d593;--u-goodbg:#153423;--u-bad:#ff8c8c;--u-badbg:#3a1b1e}
  html[data-boki-theme="gentle"] body,html[data-boki-theme="gentle"] .u-app{background:#fff9ef!important}
  html[data-boki-theme="gentle"] .u-top,html[data-boki-theme="gentle"] .u-nav,html[data-boki-theme="gentle"] .u-card,html[data-boki-theme="gentle"] .u-form-card,html[data-boki-theme="gentle"] .u-stat,html[data-boki-theme="gentle"] select{background:#fffdf8!important}
  html[data-boki-theme="contrast"] body,html[data-boki-theme="contrast"] .u-app{background:#fff!important;color:#000!important}
- html[data-boki-theme="contrast"] .u-top,html[data-boki-theme="contrast"] .u-nav,html[data-boki-theme="contrast"] .u-card,html[data-boki-theme="contrast"] .u-form-card,html[data-boki-theme="contrast"] .u-stat,html[data-boki-theme="contrast"] select{background:#fff!important;color:#000!important;border-color:#404040!important}
- html[data-boki-theme="contrast"] .u-small,html[data-boki-theme="contrast"] small,html[data-boki-theme="contrast"] .u-muted{color:#252525!important}
+ html[data-boki-theme="contrast"] .u-top,html[data-boki-theme="contrast"] .u-nav,html[data-boki-theme="contrast"] .u-card,html[data-boki-theme="contrast"] .u-form-card,html[data-boki-theme="contrast"] .u-stat,html[data-boki-theme="contrast"] select{background:#fff!important;color:#000!important;border-color:#111!important}
+ html[data-boki-theme="contrast"] .u-small,html[data-boki-theme="contrast"] small,html[data-boki-theme="contrast"] .u-muted{color:#111!important}
  html[data-boki-theme="dark"] body,html[data-boki-theme="dark"] .u-app,html[data-boki-theme="dark"] .app-v20 .u-app{background:#0e1620!important;color:#f2f6fa!important}
  html[data-boki-theme="dark"] .u-top,html[data-boki-theme="dark"] .u-nav{background:rgba(18,28,39,.98)!important;border-color:#344250!important}
  html[data-boki-theme="dark"] .u-card,html[data-boki-theme="dark"] .u-form-card,html[data-boki-theme="dark"] .u-stat,html[data-boki-theme="dark"] .u-hero,html[data-boki-theme="dark"] .map-current,html[data-boki-theme="dark"] .stage,html[data-boki-theme="dark"] .ready-row,html[data-boki-theme="dark"] .journey a,html[data-boki-theme="dark"] select,html[data-boki-theme="dark"] input{background:#18222e!important;color:#f2f6fa!important;border-color:#3a4857!important}
@@ -42,7 +56,9 @@ function ensureStyle(){
  html[data-boki-theme="dark"] .choice,html[data-boki-theme="dark"] .mini-check-choice,html[data-boki-theme="dark"] .term-card{background:#18222e!important;color:#f2f6fa!important;border-color:#435264!important}
  html[data-boki-theme="dark"] .quiznav{background:#0e1620!important}
  html[data-boki-motion="off"] *,html[data-boki-motion="off"] *::before,html[data-boki-motion="off"] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
- html[data-boki-size="large"] .u-btn,html[data-boki-size="xlarge"] .u-btn,html[data-boki-size="large"] button,html[data-boki-size="xlarge"] button{min-height:56px}
+ html[data-boki-size="standard"] .u-btn,html[data-boki-size="large"] .u-btn,html[data-boki-size="xlarge"] .u-btn,
+ html[data-boki-size="standard"] button,html[data-boki-size="large"] button,html[data-boki-size="xlarge"] button{min-height:58px}
+ html[data-boki-size="large"] select,html[data-boki-size="xlarge"] select{min-height:54px}
  `;document.head.appendChild(st);return st;
 }
 function updateDailyGoal(s){
@@ -63,8 +79,8 @@ function apply(raw,{persist=false,notify=true}={}){
  return s;
 }
 function save(raw){return apply(raw,{persist:true})}
-function reset(){localStorage.removeItem(KEY);return apply(DEFAULTS,{persist:false})}
-const api={version:2,key:KEY,defaults:{...DEFAULTS},load,normalize,apply,save,reset};window.BOKI_SETTINGS_API=api;
+function reset(){localStorage.setItem(MIGRATION_KEY,'3');localStorage.setItem(KEY,JSON.stringify(DEFAULTS));return apply(DEFAULTS,{persist:false})}
+const api={version:3,key:KEY,defaults:{...DEFAULTS},load,normalize,apply,save,reset};window.BOKI_SETTINGS_API=api;
 function boot(){apply(load(),{persist:false,notify:false})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.addEventListener('storage',e=>{if(e.key===KEY)apply(load(),{persist:false})});

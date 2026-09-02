@@ -1,14 +1,97 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="common.css"><link rel="stylesheet" href="app-v20.css"><title>学習メニュー | 日商簿記3級</title><style>.daily-feature{display:grid;grid-template-columns:52px 1fr 28px;gap:10px;align-items:center;min-height:88px;margin-bottom:12px;padding:12px 14px;border-radius:18px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#174d91,#1979d4);box-shadow:0 8px 18px rgba(28,85,151,.18)}.daily-feature .n,.lab-feature .n{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.18);font-size:1.15rem;font-weight:950}.daily-feature strong,.lab-feature strong{display:block;font-size:1.05rem}.daily-feature small,.lab-feature small{display:block;margin-top:3px;opacity:.92;font-weight:700}.daily-feature .g,.lab-feature .g{font-size:2rem}.lab-feature{display:grid;grid-template-columns:52px 1fr 28px;gap:10px;align-items:center;min-height:88px;margin:12px 0;padding:12px 14px;border-radius:18px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7654d5,#5637b7);box-shadow:0 8px 18px rgba(91,61,176,.18)}</style></head>
-<body class="app-v20"><div class="u-app"><header class="u-top"><div class="u-brand">学習メニュー</div><a href="index.html">ホーム</a></header><main class="u-page">
-<section class="app-learning-head"><h1>学習メニュー</h1><p>弱点から始めても、分野を選んでも学べます。</p><img src="mascot.png" class="app-mascot" alt="応援キャラクター"></section>
-<a class="daily-feature app-tap" href="daily.html"><span class="n">10</span><span><strong>あなた専用 今日の10問</strong><small>第1問・第2問・第3問を横断して弱点を自動復習</small></span><span class="g">›</span></a>
-<div class="app-learning-list">
-<a class="app-learning-card l1 app-tap" href="q1.html"><span class="num">1</span><span><strong>仕訳を学ぶ</strong><small>5要素・ことば変換・借方貸方・4択・プルダウン</small></span><span class="arrow">›</span></a>
-<a class="app-learning-card l2 app-tap" href="q2.html"><span class="num">2</span><span><strong>帳簿・勘定を学ぶ</strong><small>補助簿・元帳・商品有高帳</small></span><span class="arrow">›</span></a>
-<a class="app-learning-card l3 app-tap" href="q3.html"><span class="num">3</span><span><strong>決算・精算表を学ぶ</strong><small>決算整理・精算表・P/L・B/S</small></span><span class="arrow">›</span></a>
-<a class="app-learning-card l4 app-tap" href="understand.html"><span class="num">4</span><span><strong>しくみを理解する</strong><small>図・数字の流れ・論点ラボで理解</small></span><span class="arrow">›</span></a>
-<a class="app-learning-card l5 app-tap" href="management.html#review"><span class="num">5</span><span><strong>復習・総仕上げ</strong><small>苦手問題を優先して反復</small></span><span class="arrow">›</span></a>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="app-v20.css">
+<title>学習マップ | 日商簿記3級</title>
+<style>
+:root{--map-blue:#176bc1;--map-orange:#ef7b1a;--map-green:#36a84b;--map-purple:#7654d5;--map-ink:#26384a;--map-muted:#6d7d8d;--map-line:#dbe4ed}
+.map-hero{position:relative;overflow:hidden;border:1px solid #d5e6f6;border-radius:22px;background:linear-gradient(135deg,#eef8ff,#fff);padding:18px;margin-bottom:14px}.map-hero:after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-76px;top:-85px;background:rgba(40,133,213,.08)}.map-hero h1{margin:0;color:var(--map-ink);font-size:1.35rem}.map-hero p{margin:6px 0 0;color:var(--map-muted);font-size:.82rem;line-height:1.6}.map-hero-row{display:grid;grid-template-columns:1fr 112px;gap:10px;align-items:end;margin-top:14px}.map-current{border-radius:16px;background:#fff;border:1px solid #dce7f1;padding:11px 12px;box-shadow:0 5px 14px rgba(30,78,122,.06)}.map-current small{display:block;color:#718397;font-weight:800}.map-current strong{display:block;margin-top:3px;color:#194f80;font-size:1.08rem}.map-current span{display:block;margin-top:4px;font-size:.73rem;color:#6f8090}.map-hero img{width:108px;max-height:95px;object-fit:contain;justify-self:end;position:relative;z-index:1}
+.next-card{display:grid;grid-template-columns:48px 1fr auto;gap:11px;align-items:center;border:0;border-radius:20px;background:linear-gradient(135deg,#174e90,#197bd5);color:#fff;text-decoration:none;padding:14px;margin-bottom:18px;box-shadow:0 9px 22px rgba(24,91,158,.2)}.next-card .ico{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.17);display:grid;place-items:center;font-size:1.35rem}.next-card b{display:block;font-size:1rem}.next-card small{display:block;margin-top:4px;opacity:.92;line-height:1.45;font-weight:700}.next-card .go{font-size:1.9rem}
+.map-section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin:18px 2px 10px}.map-section-title h2{margin:0;font-size:1.05rem;color:var(--map-ink)}.map-section-title span{font-size:.7rem;color:#788797}.legend{display:flex;gap:6px;overflow:auto;padding:0 1px 8px;scrollbar-width:none}.legend::-webkit-scrollbar{display:none}.legend i{font-style:normal;white-space:nowrap;border-radius:999px;padding:5px 8px;background:#f4f6f8;color:#536475;font-size:.66rem;font-weight:850}.legend .weak{background:#fff0ee;color:#b84b43}.legend .study{background:#fff6db;color:#8c681c}.legend .settle{background:#e9f4ff;color:#216aa8}.legend .master{background:#e9f8ed;color:#2b7f42}.legend .due{background:#f0eaff;color:#6849b9}
+.roadmap{position:relative;padding-left:16px}.roadmap:before{content:"";position:absolute;left:32px;top:28px;bottom:28px;width:4px;border-radius:999px;background:linear-gradient(#d8e5f1,#d8e5f1)}.map-phase{position:relative;margin:13px 0 8px;padding-left:45px;font-size:.72rem;font-weight:950;letter-spacing:.04em}.map-phase:before{content:"";position:absolute;left:7px;top:50%;width:22px;height:2px;background:#b9c9d8}.map-phase.base{color:#248557}.map-phase.q1{color:#d66915}.map-phase.q2{color:#2676bb}.map-phase.q3{color:#309242}.stage{position:relative;display:grid;grid-template-columns:44px 1fr 28px;gap:10px;align-items:center;text-decoration:none;color:var(--map-ink);border:1px solid var(--map-line);border-radius:18px;background:#fff;padding:12px 12px 12px 10px;margin:9px 0;box-shadow:0 5px 15px rgba(38,63,86,.055)}.stage:before{content:"";position:absolute;left:-3px;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid #aebdcb;z-index:2}.stage .num{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#eef3f7;font-weight:950;color:#52677b}.stage strong{display:block;font-size:.96rem}.stage .desc{display:block;color:#6a7b8b;font-size:.72rem;line-height:1.45;margin-top:2px}.stage .go{font-size:1.7rem;color:#92a0ad}.stage-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:7px}.status{border-radius:999px;padding:3px 7px;font-size:.62rem;font-weight:950;background:#f2f4f6;color:#697987}.status.weak{background:#fff0ee;color:#b84b43}.status.study{background:#fff6db;color:#896313}.status.settle{background:#e8f4ff;color:#2169a7}.status.master{background:#e9f8ed;color:#287940}.status.due{background:#efe8ff;color:#6848b8}.stage-pct{font-size:.66rem;font-weight:850;color:#637487}.mini-bar{height:6px;border-radius:999px;background:#edf1f4;overflow:hidden;margin-top:6px}.mini-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#56aee8,#2577bf)}.stage.q1 .num{background:#fff0e2;color:#d46814}.stage.q1:before{border-color:#ef7b1a}.stage.q2 .num{background:#e7f3ff;color:#2172b6}.stage.q2:before{border-color:#3189d2}.stage.q3 .num{background:#e9f8eb;color:#2b8d3b}.stage.q3:before{border-color:#43b452}.lab-branches{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:7px 0 12px 47px}.lab-branches a{display:flex;align-items:center;gap:6px;text-decoration:none;border-radius:12px;padding:8px 9px;background:#f7f4ff;border:1px solid #dfd6fb;color:#6247aa;font-size:.69rem;font-weight:900}.lab-branches a span{font-size:1rem}
+.journey{display:flex;gap:7px;overflow:auto;padding:3px 1px 10px;scrollbar-width:none}.journey::-webkit-scrollbar{display:none}.journey a{flex:0 0 108px;min-height:82px;border:1px solid #dce5ed;border-radius:15px;background:#fff;text-decoration:none;color:#344a5e;padding:9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.journey a b{font-size:.78rem}.journey a span{font-size:1.15rem;margin-bottom:5px}.journey-arrow{flex:0 0 18px;display:grid;place-items:center;color:#8da0b2;font-weight:950}
+.readiness{display:grid;gap:9px}.ready-row{border:1px solid #dce5ed;background:#fff;border-radius:14px;padding:10px}.ready-top{display:flex;justify-content:space-between;gap:10px;font-size:.78rem}.ready-top b{color:#31485c}.ready-top span{font-weight:900;color:#657688}.ready-bar{height:9px;border-radius:999px;background:#edf1f4;overflow:hidden;margin-top:7px}.ready-bar i{display:block;height:100%;border-radius:999px}.ready-row.q1 i{background:#ef7b1a}.ready-row.q2 i{background:#3189d2}.ready-row.q3 i{background:#43b452}.map-note{margin-top:10px;border-radius:13px;background:#fff8e6;border:1px solid #ead8a9;padding:10px 11px;color:#72591c;font-size:.75rem;line-height:1.55}.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}.map-actions a{min-height:45px;border-radius:13px;display:grid;place-items:center;text-decoration:none;font-size:.8rem;font-weight:950}.map-actions .primary{background:#176bc1;color:#fff}.map-actions .ghost{background:#fff;border:1px solid #cfdbe6;color:#36536d}
+@media(max-width:430px){.map-hero-row{grid-template-columns:1fr 86px}.map-hero img{width:86px}.lab-branches{grid-template-columns:1fr 1fr;margin-left:36px}.roadmap{padding-left:10px}.roadmap:before{left:25px}.map-phase{padding-left:37px}.map-phase:before{left:5px}.stage:before{left:0}.map-actions{grid-template-columns:1fr}.next-card{grid-template-columns:44px 1fr 22px}}
+@media(max-width:360px){.lab-branches{grid-template-columns:1fr}.stage{grid-template-columns:40px 1fr 22px}.stage .num{width:38px;height:38px}}
+</style>
+</head>
+<body class="app-v20">
+<div class="u-app">
+<header class="u-top"><div class="u-brand">学習マップ</div><a href="index.html">ホーム</a></header>
+<main class="u-page">
+<section class="map-hero">
+  <h1>簿記の全体マップ</h1>
+  <p>第1問・第2問・第3問を別々に覚えず、「取引から決算書まで」のつながりと今の現在地を確認します。</p>
+  <div class="map-hero-row">
+    <div class="map-current"><small>あなたの現在地</small><strong id="currentStage">集計中…</strong><span id="currentDetail">習熟度と復習予定から判定します</span></div>
+    <img src="mascot.png" alt="学習を応援するキャラクター">
+  </div>
+</section>
+<a id="nextCard" class="next-card app-tap" href="q1.html"><span class="ico">🎯</span><span><b id="nextTitle">次のおすすめを判定中</b><small id="nextText">弱点・復習予定・未学習を確認しています。</small></span><span class="go">›</span></a>
+
+<div class="map-section-title"><h2>学習の一本道</h2><span>全部いつでもタップできます</span></div>
+<div class="legend"><i>⚪ 未学習</i><i class="weak">🔴 苦手</i><i class="study">🟡 学習中</i><i class="settle">🔵 定着中</i><i class="master">🟢 習熟</i><i class="due">🔄 復習時期</i></div>
+<div id="roadmap" class="roadmap"></div>
+
+<div class="map-section-title"><h2>1つの数字の旅</h2><span>取引が決算書になるまで</span></div>
+<div class="journey">
+  <a href="understand.html"><span>🛒</span><b>取引</b></a><i class="journey-arrow">›</i>
+  <a href="q1.html"><span>✎</span><b>仕訳</b></a><i class="journey-arrow">›</i>
+  <a href="q2.html"><span>📒</span><b>総勘定元帳</b></a><i class="journey-arrow">›</i>
+  <a href="q2.html"><span>▦</span><b>試算表</b></a><i class="journey-arrow">›</i>
+  <a href="labs.html"><span>🔧</span><b>決算整理</b></a><i class="journey-arrow">›</i>
+  <a href="labs.html?lab=worksheet"><span>📊</span><b>精算表</b></a><i class="journey-arrow">›</i>
+  <a href="q3.html"><span>📈</span><b>P/L・B/S</b></a><i class="journey-arrow">›</i>
+  <a href="q3.html?screen=carry"><span>🔄</span><b>締切・繰越</b></a>
 </div>
-<a class="lab-feature app-tap" href="labs.html"><span class="n">8</span><span><strong>難所ラボ</strong><small>経過勘定・固定資産・訂正仕訳・売上原価・精算表などを触って理解</small></span><span class="g">›</span></a>
-</main></div>
-<nav class="u-nav"><div class="u-nav-inner"><a href="index.html"><b>⌂</b>ホーム</a><a class="active" href="learn.html"><b>▣</b>学習メニュー</a><a href="management.html#review"><b>↻</b>復習</a><a href="settings.html"><b>•••</b>その他</a></div></nav><script src="unified.js"></script></body></html>
+
+<div class="map-section-title"><h2>CBT試験への到達度</h2><span>習熟済み問題の割合</span></div>
+<div id="readiness" class="readiness"></div>
+<div id="mapAdvice" class="map-note">学習履歴を読み込んでいます。</div>
+<div class="map-actions"><a class="primary" href="daily.html?mode=smart">今日の10問を始める</a><a class="ghost" href="management.html?top=1">学習管理で詳しく見る</a></div>
+</main>
+</div>
+<nav class="u-nav"><div class="u-nav-inner"><a href="index.html"><b>⌂</b>ホーム</a><a class="active" href="learn.html"><b>🗺</b>学習マップ</a><a href="management.html?top=1"><b>▦</b>学習管理</a><a href="settings.html"><b>•••</b>その他</a></div></nav>
+<script src="unified.js"></script>
+<script src="mastery.js"></script>
+<script>
+(function(){
+'use strict';
+const safe=(k,f={})=>{try{return JSON.parse(localStorage.getItem(k)||'null')||f}catch(e){return f}};
+const mdb=safe('boki3_mastery_v1',{questions:{}}),q1=safe('boki3_q1_trainer_v1'),q2=safe('boki3trainer_v2'),q3=safe('boki3_q3_trainer_v1'),labs=safe('boki3_difficulty_labs_v1'),checks=safe('boki3_understanding_checks_v1');
+const settings=Object.assign({masteryTarget:5,masteryAccuracy:80,masteryStreak:3},safe('boki3_unified_settings'));
+const allQ=Object.values(mdb.questions||{});const now=Date.now();
+function mastered(q){const acc=q.seen?q.correct/q.seen*100:0;return q.correct>=Number(settings.masteryTarget||5)&&(q.streak||0)>=Number(settings.masteryStreak||3)&&acc>=Number(settings.masteryAccuracy||80)}
+function lvl(q){if(!q||!q.seen)return 0;if(mastered(q))return 100;const acc=q.correct/q.seen*100;if((q.streak||0)>=2&&acc>=75)return 80;if(q.correct>=2&&acc>=60)return 55;return 25}
+function matchText(q,words){const s=`${q.id||''} ${q.topic||''} ${q.skill||''}`;return words.some(w=>s.includes(w))}
+function statFor(module,words=[],fallback=null){let arr=allQ.filter(q=>q.module===module&&(words.length?matchText(q,words):true));if(!arr.length&&fallback){const a=Number(fallback.seen||fallback.answered||0),c=Number(fallback.correct||0);if(a){const acc=Math.round(c/a*100);return{seen:a,correct:c,wrong:Math.max(0,a-c),mastered:0,due:0,pct:Math.min(82,Math.round(acc*.82)),acc}}}
+ if(!arr.length)return{seen:0,correct:0,wrong:0,mastered:0,due:0,pct:0,acc:0};const seen=arr.reduce((s,q)=>s+(q.seen||0),0),correct=arr.reduce((s,q)=>s+(q.correct||0),0),wrong=arr.reduce((s,q)=>s+(q.wrong||0),0),due=arr.filter(q=>(q.seen||0)>0&&(q.nextReview||0)<=now).length,mas=arr.filter(mastered).length,pct=Math.round(arr.reduce((s,q)=>s+lvl(q),0)/arr.length),acc=seen?Math.round(correct/seen*100):0;return{seen,correct,wrong,mastered:mas,due,pct,acc,tracked:arr.length}}
+function labStat(key){const z=labs[key]||{},best=Number(z.best||0),attempts=Number(z.attempts||0);return{seen:attempts,pct:best>=3?100:best===2?66:best===1?33:0,due:0,wrong:attempts&&best<3?1:0,lab:true}}
+function status(s){if(!s.seen)return{label:'未学習',cls:'new'};if(s.due>0)return{label:'復習時期',cls:'due'};if((s.acc&&s.acc<60&&s.seen>=2)||s.wrong>=3)return{label:'苦手',cls:'weak'};if(s.pct>=90)return{label:'習熟',cls:'master'};if(s.pct>=60)return{label:'定着中',cls:'settle'};return{label:'学習中',cls:'study'}}
+const stages=[
+ {phase:'base',phaseName:'🌱 基礎',n:1,name:'5要素',desc:'資産・負債・純資産・収益・費用のホームポジション',href:'q1.html',module:'q1',words:['5要素','ACC:'],fallback:q1.bySkill?.['5要素']},
+ {n:2,name:'ことば → 勘定科目',desc:'「掛けで売った」→ 売掛金のように問題文を翻訳',href:'q1.html',module:'q1',words:['言い回し','PH:']},
+ {n:3,name:'借方・貸方',desc:'増えた・減ったから左右を反射的に判断',href:'q1.html',module:'q1',words:['借方・貸方','借貸','DC:'],fallback:q1.bySkill?.['借貸']},
+ {phase:'q1',phaseName:'🟠 第1問',n:4,name:'仕訳',desc:'取引 → 勘定科目 → 借方・貸方 → 完成仕訳',href:'q1.html',module:'q1',words:['仕訳','J4:','JD:'],fallback:q1.bySkill?.['仕訳']},
+ {phase:'q2',phaseName:'🔵 第2問',n:5,name:'帳簿・補助簿',desc:'仕訳を元帳・補助簿へつなげる',href:'q2.html',module:'q2',words:[],fallback:q2},
+ {n:6,name:'試算表',desc:'元帳の残高を集めて全体を確認する',href:'q2.html',module:'q2',words:['試算表','元帳','勘定']},
+ {phase:'q3',phaseName:'🟢 第3問',n:7,name:'決算整理',desc:'期中の数字を3月31日の正しい状態へ直す',href:'labs.html',module:'q3',words:['仕訳','決算整理'],fallback:q3.bySkill?.['仕訳'],labs:['accrual','asset','correction','cogs']},
+ {n:8,name:'精算表',desc:'決算整理後の数字をP/L・B/Sへ振り分ける',href:'labs.html?lab=worksheet',module:'q3',words:['ミニ表','精算表','総合'],fallback:q3.bySkill?.['ミニ表']||q3.bySkill?.['総合'],labs:['worksheet']},
+ {n:9,name:'P/L・B/S',desc:'収益・費用と資産・負債・純資産の行き先を完成',href:'q3.html',module:'q3',words:['P/L','B/S','財務諸表','総合'],fallback:q3.bySkill?.['総合']},
+ {n:10,name:'締切・繰越',desc:'3/31から4/1へ何が残るのかを理解する',href:'q3.html?screen=carry',custom:()=>{const a=labStat('carry'),b=checks.carry||{};if(!a.seen&&b.attempts)return{seen:Number(b.attempts),pct:Number(b.best||b.score||0)*33,due:0,wrong:Number(b.best||0)<3?1:0};return a}}
+];
+stages.forEach(x=>{x.s=x.custom?x.custom():statFor(x.module,x.words,x.fallback);x.st=status(x.s)});
+const labNames={accrual:['⏱','経過勘定'],asset:['🏢','固定資産'],correction:['↔','訂正仕訳'],cogs:['📦','売上原価'],worksheet:['▦','精算表連動']};
+let html='',lastPhase='';stages.forEach(x=>{if(x.phase&&x.phase!==lastPhase){lastPhase=x.phase;html+=`<div class="map-phase ${x.phase}">${x.phaseName}</div>`}html+=`<a class="stage ${x.phase==='q1'||(x.n===4)?'q1':x.phase==='q2'||(x.n>=5&&x.n<=6)?'q2':x.n>=7?'q3':''} app-tap" href="${x.href}"><span class="num">${x.n}</span><span><strong>${x.name}</strong><span class="desc">${x.desc}</span><span class="stage-meta"><i class="status ${x.st.cls}">${x.st.label}</i><i class="stage-pct">習熟度 ${Math.round(x.s.pct||0)}%${x.s.due?`・復習 ${x.s.due}問`:''}</i></span><span class="mini-bar"><i style="width:${Math.max(0,Math.min(100,x.s.pct||0))}%"></i></span></span><span class="go">›</span></a>`;if(x.labs){html+='<div class="lab-branches">'+x.labs.map(k=>`<a href="labs.html?lab=${k}"><span>${labNames[k][0]}</span>${labNames[k][1]}</a>`).join('')+'</div>'}});document.getElementById('roadmap').innerHTML=html;
+const started=stages.filter(x=>x.s.seen),dueStages=stages.filter(x=>x.s.due>0),weakStarted=started.filter(x=>x.st.cls==='weak'||x.st.cls==='study').sort((a,b)=>a.s.pct-b.s.pct),unlearned=stages.filter(x=>!x.s.seen);const rec=dueStages.sort((a,b)=>b.s.due-a.s.due)[0]||weakStarted[0]||unlearned[0]||stages[stages.length-1];const current=started.length?started.slice().sort((a,b)=>b.n-a.n)[0]:stages[0];document.getElementById('currentStage').textContent=`${current.n}. ${current.name}`;document.getElementById('currentDetail').textContent=current.s.seen?`${current.st.label}・習熟度 ${Math.round(current.s.pct)}%${current.s.due?'・復習時期':''}`:'ここから始めるのがおすすめです';const nc=document.getElementById('nextCard');nc.href=rec.href;document.getElementById('nextTitle').textContent=`次のおすすめ：${rec.name}`;document.getElementById('nextText').textContent=rec.s.due?`復習予定が ${rec.s.due}問あります。忘れる前に確認しましょう。`:rec.s.seen?`現在の習熟度は ${Math.round(rec.s.pct)}%。ここを補強すると全体がつながりやすくなります。`:'まだ未学習です。順番にここから進めると理解しやすくなります。';
+const totals={q1:75,q2:7,q3:8},names={q1:'第1問 仕訳',q2:'第2問 帳簿・勘定',q3:'第3問 決算・精算表'};document.getElementById('readiness').innerHTML=['q1','q2','q3'].map(m=>{const arr=allQ.filter(q=>q.module===m),mas=arr.filter(mastered).length,due=arr.filter(q=>(q.seen||0)>0&&(q.nextReview||0)<=now).length,total=totals[m],pct=Math.min(100,Math.round(mas/total*100));return `<div class="ready-row ${m}"><div class="ready-top"><b>${names[m]}</b><span>${pct}%・習熟 ${mas}/${total}${due?`・復習${due}`:''}</span></div><div class="ready-bar"><i style="width:${pct}%"></i></div></div>`}).join('');
+const lowest=['q1','q2','q3'].map(m=>{const arr=allQ.filter(q=>q.module===m&&q.seen>0);const p=arr.length?Math.round(arr.reduce((s,q)=>s+lvl(q),0)/arr.length):0;return{m,p,seen:arr.length}}).filter(x=>x.seen).sort((a,b)=>a.p-b.p)[0];document.getElementById('mapAdvice').innerHTML=dueStages.length?`🔄 <b>復習時期の論点があります。</b> 忘却曲線に沿って、まず「${rec.name}」を確認するのがおすすめです。`:lowest?`💡 現在は <b>${names[lowest.m]}</b> の定着を優先すると、全体の得点力を伸ばしやすい状態です。`:'🌱 まだ学習履歴が少ないため、5要素 → ことば変換 → 借方・貸方の順で始めるのがおすすめです。';
+})();
+</script>
+</body>
+</html>

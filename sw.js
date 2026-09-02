@@ -1,5 +1,5 @@
-const CACHE='boki3-unified-v2.5.15-weighted-mastery-safe';
-const ASSETS=['./','./index.html','./daily.html','./learn.html','./questions.html','./labs.html','./q1.html','./q2.html','./q3.html','./understand.html','./glossary.html','./management.html','./settings.html','./common.css','./mobile-app.css','./app-ui-v13.css','./app-v20.css','./unified.js','./settings-runtime.js','./settings-page.js','./dark-mode-fix.js','./contrast-mode-fix.js','./mastery.js','./mastery-native.js','./mastery-progress-v2.js','./accrual-layout-fix.js','./asset-lab-v2.js','./dropdown-choice-fix.js','./question-variety-v2.js','./question-book.js','./account-window-bridge.js','./ui-polish.js','./learning-map-nav.js','./account-master.js','./phrase-bank.js','./phrase-bridge.js','./manifest.json','./app-icon-v2.svg','./icon-192-v2.png','./app-icon.svg','./icon-192.png','./icon-512.png','./mascot.png','./assets/mascot.png'];
+const CACHE='boki3-unified-v2.5.16-question-book-sequential';
+const ASSETS=['./','./index.html','./daily.html','./learn.html','./questions.html','./labs.html','./q1.html','./q2.html','./q3.html','./understand.html','./glossary.html','./management.html','./settings.html','./common.css','./mobile-app.css','./app-ui-v13.css','./app-v20.css','./unified.js','./settings-runtime.js','./settings-page.js','./dark-mode-fix.js','./contrast-mode-fix.js','./mastery.js','./mastery-native.js','./mastery-progress-v2.js','./accrual-layout-fix.js','./asset-lab-v2.js','./dropdown-choice-fix.js','./question-variety-v2.js','./question-book.js','./question-book-player.js','./account-window-bridge.js','./ui-polish.js','./learning-map-nav.js','./account-master.js','./phrase-bank.js','./phrase-bridge.js','./manifest.json','./app-icon-v2.svg','./icon-192-v2.png','./app-icon.svg','./icon-192.png','./icon-512.png','./mascot.png','./assets/mascot.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 async function withEnhancements(res){
@@ -13,6 +13,7 @@ async function withEnhancements(res){
  if(!/rel=["']icon["']/i.test(text))text=text.replace(/<\/head>/i,'<link rel="icon" href="./icon-192-v2.png" sizes="192x192"></head>');
  const scripts=[];
  const weightedPage=text.includes('id="overallMastery"')||text.includes('id="catalog"');
+ const problemBookPage=text.includes('id="catalog"');
  if(!text.includes('settings-runtime.js'))scripts.push('<script src="./settings-runtime.js"></script>');
  if(!text.includes('dark-mode-fix.js'))scripts.push('<script src="./dark-mode-fix.js"></script>');
  if(!text.includes('contrast-mode-fix.js'))scripts.push('<script src="./contrast-mode-fix.js"></script>');
@@ -26,6 +27,7 @@ async function withEnhancements(res){
  if(!text.includes('dropdown-choice-fix.js'))scripts.push('<script src="./dropdown-choice-fix.js"></script>');
  if(!text.includes('question-variety-v2.js'))scripts.push('<script src="./question-variety-v2.js"></script>');
  if(weightedPage&&!text.includes('mastery-progress-v2.js'))scripts.push('<script src="./mastery-progress-v2.js"></script>');
+ if(problemBookPage&&!text.includes('question-book-player.js'))scripts.push('<script src="./question-book-player.js"></script>');
  if(!text.includes('ui-polish.js'))scripts.push('<script src="./ui-polish.js"></script>');
  if(!text.includes('learning-map-nav.js'))scripts.push('<script src="./learning-map-nav.js"></script>');
  if(!text.includes('settings-page.js'))scripts.push('<script src="./settings-page.js"></script>');

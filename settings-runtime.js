@@ -1,16 +1,18 @@
 (function(){
 'use strict';
-if(window.BOKI_SETTINGS_API?.version>=3)return;
-const KEY='boki3_unified_settings',MIGRATION_KEY='boki3_settings_schema_v3';
-const DEFAULTS={theme:'contrast',font:'standard',size:'standard',motion:'standard',daily:10,masteryTarget:5,masteryAccuracy:80,masteryStreak:3,wrongThreshold:2};
+if(window.BOKI_SETTINGS_API?.version>=4)return;
+const KEY='boki3_unified_settings',MIGRATION_KEY='boki3_settings_schema_v4',OLD_V3='boki3_settings_schema_v3';
+const DEFAULTS={theme:'standard',font:'standard',size:'standard',motion:'standard',daily:10,masteryTarget:5,masteryAccuracy:80,masteryStreak:3,wrongThreshold:2};
 const ALLOWED={theme:['standard','gentle','contrast','dark'],font:['standard','rounded','serif'],size:['small','standard','large','xlarge'],motion:['standard','off']};
 function safeParse(s){try{return JSON.parse(s||'{}')||{}}catch(e){return {}}}
 function migrate(raw={}){
  const next={...raw};
- if(localStorage.getItem(MIGRATION_KEY)!=='3'){
-  if(!next.theme||next.theme==='standard')next.theme='contrast';
-  if(next.size==='xlarge')next.size='standard';
-  localStorage.setItem(MIGRATION_KEY,'3');
+ if(localStorage.getItem(MIGRATION_KEY)!=='4'){
+  if(!next.theme)next.theme='standard';
+  /* v3で標準から高コントラストへ自動移行した端末を一度だけ標準へ戻す */
+  if(localStorage.getItem(OLD_V3)==='3'&&next.theme==='contrast')next.theme='standard';
+  if(next.size==='xlarge'&&localStorage.getItem(OLD_V3)!=='3')next.size='standard';
+  localStorage.setItem(MIGRATION_KEY,'4');
   try{localStorage.setItem(KEY,JSON.stringify({...DEFAULTS,...next}))}catch(e){}
  }
  return next;
@@ -79,8 +81,8 @@ function apply(raw,{persist=false,notify=true}={}){
  return s;
 }
 function save(raw){return apply(raw,{persist:true})}
-function reset(){localStorage.setItem(MIGRATION_KEY,'3');localStorage.setItem(KEY,JSON.stringify(DEFAULTS));return apply(DEFAULTS,{persist:false})}
-const api={version:3,key:KEY,defaults:{...DEFAULTS},load,normalize,apply,save,reset};window.BOKI_SETTINGS_API=api;
+function reset(){localStorage.setItem(MIGRATION_KEY,'4');localStorage.setItem(KEY,JSON.stringify(DEFAULTS));return apply(DEFAULTS,{persist:false})}
+const api={version:4,key:KEY,defaults:{...DEFAULTS},load,normalize,apply,save,reset};window.BOKI_SETTINGS_API=api;
 function boot(){apply(load(),{persist:false,notify:false})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.addEventListener('storage',e=>{if(e.key===KEY)apply(load(),{persist:false})});

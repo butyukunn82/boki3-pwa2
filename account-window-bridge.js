@@ -1,0 +1,1 @@
+(function(){try{if(typeof BOKI_ACCOUNTS!=='undefined')window.BOKI_ACCOUNTS=BOKI_ACCOUNTS;if(typeof BOKI_ACCOUNT_TERMS!=='undefined')window.BOKI_ACCOUNT_TERMS=BOKI_ACCOUNT_TERMS}catch(e){}})();

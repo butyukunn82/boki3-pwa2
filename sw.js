@@ -1,5 +1,5 @@
-const CACHE='boki3-unified-v2.8.1-coverage-wave2';
-const ASSETS=['./','./index.html','./daily.html','./learn.html','./questions.html','./coverage.html','./welcome.html','./mock.html','./labs.html','./q1.html','./q2.html','./q3.html','./understand.html','./glossary.html','./management.html','./settings.html','./common.css','./mobile-app.css','./app-ui-v13.css','./app-v20.css','./unified.js','./settings-runtime.js','./settings-page.js','./dark-mode-fix.js','./contrast-mode-fix.js','./mastery.js','./mastery-native.js','./mastery-progress-v2.js','./coverage-wave2.js','./mastery-coverage-patch.js','./exam-scope-v2.js','./exam-scope-wave2-patch.js','./exam-readiness.js','./onboarding.js','./coverage-book.js','./coverage-integration.js','./coverage-runtime-fix.js','./coverage-daily.js','./mock-coverage.js','./mock-wave2.js','./accrual-layout-fix.js','./asset-lab-v2.js','./dropdown-choice-fix.js','./question-variety-v2.js','./question-book.js','./question-book-player.js','./account-window-bridge.js','./ui-polish.js','./learning-map-nav.js','./account-master.js','./phrase-bank.js','./phrase-bridge.js','./manifest.json','./app-icon-v2.svg','./icon-192-v2.png','./app-icon.svg','./icon-192.png','./icon-512.png','./mascot.png','./assets/mascot.png'];
+const CACHE='boki3-unified-v2.9.0-practical-wave3';
+const ASSETS=['./','./index.html','./daily.html','./learn.html','./questions.html','./coverage.html','./practical.html','./welcome.html','./mock.html','./labs.html','./q1.html','./q2.html','./q3.html','./understand.html','./glossary.html','./management.html','./settings.html','./common.css','./mobile-app.css','./app-ui-v13.css','./app-v20.css','./unified.js','./settings-runtime.js','./settings-page.js','./dark-mode-fix.js','./contrast-mode-fix.js','./mastery.js','./mastery-native.js','./mastery-progress-v2.js','./coverage-wave2.js','./practical-wave3.js','./mastery-coverage-patch.js','./mastery-practical-patch.js','./exam-scope-v2.js','./exam-scope-wave2-patch.js','./exam-scope-wave3-patch.js','./exam-readiness.js','./onboarding.js','./coverage-book.js','./practical-book.js','./coverage-integration.js','./practical-integration.js','./coverage-runtime-fix.js','./coverage-daily.js','./practical-daily.js','./mock-coverage.js','./mock-wave2.js','./practical-mock.js','./accrual-layout-fix.js','./asset-lab-v2.js','./dropdown-choice-fix.js','./question-variety-v2.js','./question-book.js','./question-book-player.js','./account-window-bridge.js','./ui-polish.js','./learning-map-nav.js','./account-master.js','./phrase-bank.js','./phrase-bridge.js','./manifest.json','./app-icon-v2.svg','./icon-192-v2.png','./app-icon.svg','./icon-192.png','./icon-512.png','./mascot.png','./assets/mascot.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{
  const ks=await caches.keys();await Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim();
@@ -34,17 +34,24 @@ async function withEnhancements(res){
  if(!text.includes('question-variety-v2.js'))scripts.push('<script src="./question-variety-v2.js"></script>');
  if(weightedPage&&!text.includes('mastery-progress-v2.js'))scripts.push('<script src="./mastery-progress-v2.js"></script>');
  if(!text.includes('coverage-wave2.js'))scripts.push('<script src="./coverage-wave2.js"></script>');
+ if((weightedPage||dailyPage)&&!text.includes('practical-wave3.js'))scripts.push('<script src="./practical-wave3.js"></script>');
  if(weightedPage&&!text.includes('mastery-coverage-patch.js'))scripts.push('<script src="./mastery-coverage-patch.js"></script>');
+ if(weightedPage&&!text.includes('mastery-practical-patch.js'))scripts.push('<script src="./mastery-practical-patch.js"></script>');
  if(weightedPage&&!text.includes('exam-scope-v2.js'))scripts.push('<script src="./exam-scope-v2.js"></script>');
  if(weightedPage&&!text.includes('exam-scope-wave2-patch.js'))scripts.push('<script src="./exam-scope-wave2-patch.js"></script>');
+ if(weightedPage&&!text.includes('exam-scope-wave3-patch.js'))scripts.push('<script src="./exam-scope-wave3-patch.js"></script>');
  if(homePage&&!text.includes('exam-readiness.js'))scripts.push('<script src="./exam-readiness.js"></script>');
  if(problemBookPage&&!text.includes('question-book-player.js'))scripts.push('<script src="./question-book-player.js"></script>');
  if(problemBookPage&&!text.includes('coverage-book.js'))scripts.push('<script src="./coverage-book.js"></script>');
+ if(problemBookPage&&!text.includes('practical-book.js'))scripts.push('<script src="./practical-book.js"></script>');
  if(!text.includes('coverage-integration.js'))scripts.push('<script src="./coverage-integration.js"></script>');
+ if(!text.includes('practical-integration.js'))scripts.push('<script src="./practical-integration.js"></script>');
  if(!text.includes('coverage-runtime-fix.js'))scripts.push('<script src="./coverage-runtime-fix.js"></script>');
  if(dailyPage&&!text.includes('coverage-daily.js'))scripts.push('<script src="./coverage-daily.js"></script>');
+ if(dailyPage&&!text.includes('practical-daily.js'))scripts.push('<script src="./practical-daily.js"></script>');
  if(mockPage&&!text.includes('mock-coverage.js'))scripts.push('<script src="./mock-coverage.js"></script>');
  if(mockPage&&!text.includes('mock-wave2.js'))scripts.push('<script src="./mock-wave2.js"></script>');
+ if(mockPage&&!text.includes('practical-mock.js'))scripts.push('<script src="./practical-mock.js"></script>');
  if(!text.includes('onboarding.js'))scripts.push('<script src="./onboarding.js"></script>');
  if(!text.includes('ui-polish.js'))scripts.push('<script src="./ui-polish.js"></script>');
  if(!text.includes('learning-map-nav.js'))scripts.push('<script src="./learning-map-nav.js"></script>');

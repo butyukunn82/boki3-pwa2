@@ -1,0 +1,8 @@
+(function(){
+'use strict';
+if(!location.pathname.endsWith('management.html'))return;
+const safe=(k)=>{try{const v=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(v)?v:[]}catch{return []}};
+function history(){const v3=safe('boki3_mock_cbt_v3'),v2=safe('boki3_mock_cbt_v2');const all=[...v3.map(x=>({...x,ver:3})),...v2.map(x=>({...x,ver:2}))].filter(x=>x&&x.at).sort((a,b)=>Number(b.at)-Number(a.at));const seen=new Set();return all.filter(x=>{const k=`${x.at}:${x.score}`;if(seen.has(k))return false;seen.add(k);return true})}
+function apply(){const root=document.getElementById('learningCycle');if(!root)return false;const h=history(),latest=h[0],prev=h[1],summary=root.querySelectorAll('.lc-summary>div');if(summary[0]){const b=summary[0].querySelector('b'),s=summary[0].querySelector('small');if(b)b.textContent=latest?`${Number.isInteger(Number(latest.score))?Number(latest.score):Number(latest.score).toFixed(1)}点`:'—';if(s)s.textContent=latest?(prev?`前回比 ${(Number(latest.score)-Number(prev.score))>=0?'+':''}${Math.round((Number(latest.score)-Number(prev.score))*10)/10}点`:'初回模試'):'模試履歴なし'}const bars=root.querySelector('.lc-bars');if(bars){const data=h.slice(0,5).reverse();bars.innerHTML=data.map(m=>{const sc=Math.max(0,Math.min(100,Number(m.score||0)));return `<div class="lc-trend-item"><i style="height:${Math.max(8,sc)}%"></i><b>${Number.isInteger(sc)?sc:sc.toFixed(1)}</b></div>`}).join('')}return true}
+if(!apply()){const mo=new MutationObserver(()=>{if(apply())mo.disconnect()});mo.observe(document.body,{childList:true,subtree:true});setTimeout(()=>mo.disconnect(),5000)}
+})();

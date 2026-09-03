@@ -1,0 +1,51 @@
+name: 問題・解説の誤り報告
+description: 問題、正答、解説、採点の不整合を報告するためのフォームです。
+title: "[問題報告] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ご報告ありがとうございます。個人情報や公開したくない学習履歴は記載しないでください。
+  - type: dropdown
+    id: page
+    attributes:
+      label: 対象
+      options:
+        - 第1問
+        - 第2問
+        - 第3問
+        - 60分模試
+        - 今日の10問
+        - その他
+    validations:
+      required: true
+  - type: input
+    id: problem
+    attributes:
+      label: 問題を特定できる情報
+      description: 問題文の冒頭、出題形式、セット名などを記載してください。
+      placeholder: 例：第2問「利息・未収利息」、セットE
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: おかしいと思う点
+      description: 現在の表示・正答・解説と、どこが違うと思うかを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 正しいと考える内容
+      description: 根拠となる公式資料や計算過程があれば併記してください。
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: 端末・ブラウザ（不具合の場合）
+      placeholder: 例：Android / Chrome
+    validations:
+      required: false

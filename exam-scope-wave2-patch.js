@@ -11,7 +11,7 @@ const upgrades={
  erecord:['covered','発生記録・振替・決済・5要素まで専用問題を追加'],
  cashless:['covered','販売時の手数料、入金、通常の売掛金との違いまで補強'],
  returns:['covered','現金・掛けの売上返品、仕入返品、元取引からの判断まで補強'],
- asset-ledger:['covered','固定資産台帳の項目・帳簿価額計算・総勘定元帳との関係まで補強'],
+ 'asset-ledger':['covered','固定資産台帳の項目・帳簿価額計算・総勘定元帳との関係まで補強'],
  overdraft:['covered','決算振替・翌期首再振替・負債判定・総合決算まで補強'],
  stock:['covered','切手・収入印紙の貯蔵品振替・費用調整・総合決算まで補強'],
  capital:['covered','設立・増資と売上等の資金流入との区別まで補強']

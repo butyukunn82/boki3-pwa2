@@ -9,8 +9,8 @@ const CAT={
  closing:{label:'決算整理',href:'q1.html'},
  equity:{label:'純資産・特殊処理',href:'q1.html'}
 };
-const Q2LINK={closing:'q2-cbt.html?mode=closing',asset:'q2-cbt.html?mode=asset',accrual:'q2-cbt.html?mode=accrual',dividend:'q2-cbt.html?mode=dividend'};
-const Q3LINK={statements:'q3-cbt.html?mode=statements',worksheet:'q3-cbt.html?mode=worksheet',adjusted:'q3-cbt.html?mode=adjusted'};
+const Q2LINK={closing:'q2-cbt.html?mode=closing',asset:'q2-cbt.html?mode=asset',accrual:'q2-cbt.html?mode=accrual',dividend:'q2-cbt.html?mode=dividend',interest:'q2-cbt.html?mode=interest'};
+const Q3LINK={statements:'q3-cbt.html?mode=statements',worksheet:'q3-cbt.html?mode=worksheet',adjusted:'q3-cbt.html?mode=adjusted',comprehensive:'q3-cbt.html?mode=comprehensive'};
 const pct=(c,t)=>t?Math.round(c/t*100):100;
 function controlScore(root){const ok=root.querySelectorAll('.ok').length,ng=root.querySelectorAll('.ng').length;return{correct:ok,total:ok+ng,rate:pct(ok,ok+ng),wrong:ng}}
 function q1Cats(){

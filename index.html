@@ -1,24 +1,108 @@
 <!doctype html>
-<html lang="ja"><head><script>document.documentElement.classList.add('js')</script>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff">
-<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><link rel="stylesheet" href="common.css"><link rel="stylesheet" href="app-v20.css"><link rel="stylesheet" href="ux-v23.css">
-<title>日商簿記3級トレーナー</title></head>
-<body class="app-v20 app-home"><div class="u-app">
-<header class="u-top"><div class="app-brand-row" style="padding:0"><div class="app-logo">📖</div><div><div class="app-brand-title">日商簿記<em>3級</em>トレーナー</div><div class="app-brand-sub">理解して、反射で解けるようになる</div></div></div><a href="settings.html" aria-label="設定">⚙</a></header>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="app-v20.css">
+<title>日商簿記3級トレーナー</title>
+<style>
+.personal-daily{display:grid;grid-template-columns:60px 1fr 34px;gap:11px;align-items:center;min-height:104px;border-radius:20px;padding:13px 14px;text-decoration:none;background:linear-gradient(135deg,#173f79,#176fc8 58%,#2d9bdd);color:#fff;box-shadow:0 9px 22px rgba(25,82,151,.24);position:relative;overflow:hidden}.personal-daily:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-50px;top:-55px;background:rgba(255,255,255,.10)}.personal-daily .mark{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.17);font-size:1.55rem;font-weight:950}.personal-daily strong{display:block;font-size:1.12rem}.personal-daily small{display:block;margin-top:3px;opacity:.92;font-weight:700;line-height:1.45}.personal-daily .mixline{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.personal-daily .mixline i{font-style:normal;font-size:.67rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px 6px}.personal-daily .go{font-size:2rem;z-index:1}
+.mode-picker{display:flex;gap:7px;overflow:auto;padding:9px 1px 3px;scrollbar-width:none}.mode-picker::-webkit-scrollbar{display:none}.mode-picker a{flex:0 0 auto;text-decoration:none;border:1px solid #cdd9e5;background:#fff;color:#36516c;border-radius:999px;padding:8px 11px;font-size:.73rem;font-weight:900}.mode-picker a:first-child{background:#176bc1;color:#fff;border-color:#176bc1}
+.touch-lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:0 0 10px}.touch-lab-card{min-height:128px;border-radius:20px;padding:15px 14px;text-decoration:none;color:#fff;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 9px 24px rgba(28,48,73,.14);position:relative;overflow:hidden}.touch-lab-card:after{content:"";position:absolute;width:92px;height:92px;border-radius:50%;right:-28px;top:-31px;background:rgba(255,255,255,.13)}.touch-lab-card .touch-icon{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:1.35rem;font-weight:950;position:relative;z-index:1}.touch-lab-card strong{display:block;font-size:1rem;line-height:1.3;margin-top:9px;position:relative;z-index:1}.touch-lab-card small{display:block;font-size:.74rem;line-height:1.45;margin-top:4px;color:rgba(255,255,255,.94);font-weight:700;position:relative;z-index:1}.touch-lab-card .arrow{position:absolute;right:13px;bottom:10px;font-size:1.65rem;font-weight:900;color:#fff;opacity:.92}.touch-lab-card.accrual{background:linear-gradient(135deg,#1ba28d,#087d91)}.touch-lab-card.asset{background:linear-gradient(135deg,#397fd1,#175eae)}.touch-lab-card.correction{background:linear-gradient(135deg,#dc6961,#b94250)}.touch-lab-card.cogs{background:linear-gradient(135deg,#ef9b2e,#df6d1e)}.lab-all{display:grid;grid-template-columns:50px 1fr 28px;gap:10px;align-items:center;min-height:72px;border-radius:17px;padding:11px 13px;text-decoration:none;background:linear-gradient(135deg,#7654d5,#5536b5);color:#fff;box-shadow:0 8px 20px rgba(92,62,179,.18)}.lab-all .n{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.17);display:grid;place-items:center;font-weight:950}.lab-all strong{display:block}.lab-all small{display:block;margin-top:2px;opacity:.92;font-size:.72rem}.lab-all .go{font-size:1.8rem}
+/* キャラクターはボタンの横に専用スペースを確保し、数字・文字に重ねない */
+.app-dashboard{position:relative;overflow:hidden;padding-bottom:16px}.app-dashboard-grid{min-height:208px}.app-mascot--hero{width:112px!important;max-width:112px!important;right:8px!important;bottom:15px!important;z-index:4;pointer-events:none}.app-continue{position:relative;z-index:3!important;margin-right:108px!important;padding-right:18px!important}.app-dash-stat.mastery-stat b{font-size:1.42rem}.app-dash-stat.mastery-stat span{display:block}
+.module-mastery{margin-top:7px}.module-mastery .mrow{display:flex;justify-content:space-between;gap:8px;font-size:.67rem;font-weight:800;color:rgba(255,255,255,.94)}.module-mastery .mbar{height:7px;border-radius:999px;background:rgba(255,255,255,.25);overflow:hidden;margin-top:5px}.module-mastery .mbar i{display:block;height:100%;width:0;background:#fff;border-radius:999px}.module-mastery .mweak{font-size:.65rem;opacity:.92}
+.app-main-card .module-mastery{grid-column:2/3;width:100%}.app-main-card.q1 .module-mastery,.app-main-card.q2 .module-mastery,.app-main-card.q3 .module-mastery{color:#fff}
+.pwa-card{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;border:1px solid #cfe0ee;background:linear-gradient(135deg,#f1f9ff,#fff);border-radius:17px;padding:11px 12px;margin:12px 0;box-shadow:0 5px 16px rgba(30,72,110,.06)}.pwa-card .ico{width:44px;height:44px;border-radius:13px;background:#e4f2ff;display:grid;place-items:center;font-size:1.35rem}.pwa-card b{display:block}.pwa-card small{display:block;color:#66798d;font-size:.7rem;line-height:1.45}.pwa-card button{border:0;border-radius:11px;background:#176bc1;color:#fff;min-height:42px;padding:0 12px;font-weight:900}
+@media(max-width:430px){.app-dashboard-grid{min-height:204px}.app-mascot--hero{width:98px!important;max-width:98px!important;right:7px!important;bottom:15px!important}.app-continue{margin-right:94px!important}.pwa-card{grid-template-columns:42px 1fr}.pwa-card button{grid-column:1/-1;width:100%}}
+@media(max-width:380px){.touch-lab-grid{grid-template-columns:1fr}.touch-lab-card{min-height:108px}.app-mascot--hero{width:86px!important;max-width:86px!important;right:5px!important;bottom:16px!important}.app-continue{margin-right:82px!important}}
+</style>
+</head>
+<body class="app-v20 app-home">
+<div class="u-app">
+<header class="u-top">
+  <div class="app-brand-row" style="padding:0">
+    <div class="app-logo">📖</div>
+    <div><div class="app-brand-title">日商簿記<em>3級</em>トレーナー</div><div class="app-brand-sub">やさしく学んで、しっかり合格！</div></div>
+  </div>
+  <a href="settings.html" aria-label="設定">⚙</a>
+</header>
 <main class="u-page">
-<section class="v23-hero"><div><h1>今日やることを、迷わず進める</h1><p>理解 → 練習 → 本番形式の順で、少しずつ仕上げます。</p></div><img src="assets/mascot.png" alt="学習を応援するキャラクター"></section>
-<section class="v23-today"><div class="v23-today-top"><div><h2 id="recommendTitle">今日のおすすめ</h2><p id="recommendText">学習履歴から、今やる内容を選びます。</p></div><a class="v23-primary" id="recommendBtn" href="q1.html">ここから始める</a></div></section>
-<div class="v23-stats" aria-label="学習状況"><div class="v23-stat"><b><span id="todayCount">0</span>/<span id="dailyGoal">10</span></b><small>今日</small></div><div class="v23-stat"><b id="practiceRate">—</b><small>練習正答率</small></div><div class="v23-stat"><b id="streak">0日</b><small>連続学習</small></div></div>
-<div class="v23-section">問題を解く</div><div class="v23-list">
-<a class="v23-card" href="q1.html"><span class="v23-icon">✎</span><span><b>第1問　仕訳</b><small>5要素から仕訳を組み立てる</small></span><span class="v23-arrow">›</span></a>
-<a class="v23-card" href="q2.html"><span class="v23-icon">▤</span><span><b>第2問　帳簿・勘定</b><small>帳簿の役割と記入を身につける</small></span><span class="v23-arrow">›</span></a>
-<a class="v23-card" href="q3.html"><span class="v23-icon">▥</span><span><b>第3問　決算・精算表</b><small>決算整理から財務諸表までつなげる</small></span><span class="v23-arrow">›</span></a>
+  <section class="app-dashboard" aria-label="今日の学習状況">
+    <img class="app-mascot app-mascot--hero" src="mascot.png" alt="学習を応援するキャラクター">
+    <div class="app-dashboard-grid">
+      <div class="app-ring" id="todayRing"><div class="app-ring-content"><small>今日の学習</small><strong><span id="todayCount">0</span>/<span id="dailyGoal">10</span></strong><span>問</span></div></div>
+      <div>
+        <div class="app-dash-stat"><span>正答率</span><b id="allAcc">—</b> <b class="up">↗</b></div>
+        <div class="app-dash-stat"><span>連続学習日数</span><b id="streak">0日</b> 🔥</div>
+        <div class="app-dash-stat mastery-stat"><span>総合習熟度</span><b id="overallMastery">—</b></div>
+      </div>
+    </div>
+    <a id="continueBtn" class="app-continue app-tap" href="learn.html">続きからはじめる ▶</a>
+  </section>
+
+  <div id="pwaInstallCard" class="pwa-card" hidden><span class="ico">📱</span><span><b>スマホにインストール</b><small>ホーム画面からアプリのように起動できます。学習履歴はこの端末に保存されます。</small></span><button type="button">インストール</button></div>
+
+  <div class="app-section-title">今日のおすすめ</div>
+  <a class="personal-daily app-tap" href="daily.html?mode=smart">
+    <span class="mark">10</span>
+    <span><strong>あなた専用 今日の10問</strong><small>弱点・未学習・忘却復習から、今日いちばん効く問題を自動選定</small><span class="mixline"><i>弱点優先</i><i>忘却曲線</i><i>習熟問題は休眠</i></span></span>
+    <span class="go">›</span>
+  </a>
+  <div class="mode-picker" aria-label="出題モード">
+    <a href="daily.html?mode=smart">おすすめ</a>
+    <a href="daily.html?mode=due">復習予定</a>
+    <a href="daily.html?mode=low">未習熟のみ</a>
+    <a href="daily.html?mode=wrong">苦手だけ</a>
+    <a href="daily.html?mode=unlearned">未学習のみ</a>
+  </div>
+
+  <div class="app-section-title">問題別に学ぶ</div>
+  <div class="app-main-list">
+    <a class="app-main-card q1 app-tap" href="q1.html" data-mastery-module="q1"><span class="app-symbol">✎</span><span><strong>第1問　仕訳</strong><small>5要素から仕訳を組み立てる</small><div class="module-mastery"><div class="mrow"><span class="mtext">習熟度を集計中</span><span class="mweak"></span></div><div class="mbar"><i></i></div></div></span><span class="go">›</span></a>
+    <a class="app-main-card q2 app-tap" href="q2.html" data-mastery-module="q2"><span class="app-symbol">▤</span><span><strong>第2問　帳簿・勘定</strong><small>補助簿・元帳・商品有高帳を理解する</small><div class="module-mastery"><div class="mrow"><span class="mtext">習熟度を集計中</span><span class="mweak"></span></div><div class="mbar"><i></i></div></div></span><span class="go">›</span></a>
+    <a class="app-main-card q3 app-tap" href="q3.html" data-mastery-module="q3"><span class="app-symbol">▥</span><span><strong>第3問　決算・精算表</strong><small>決算整理からP/L・B/Sまで</small><div class="module-mastery"><div class="mrow"><span class="mtext">習熟度を集計中</span><span class="mweak"></span></div><div class="mbar"><i></i></div></div></span><span class="go">›</span></a>
+    <a class="app-main-card learn app-tap" href="understand.html"><span class="app-symbol">💡</span><span><strong>しくみを理解</strong><small>簿記マップ・数字の旅・論点ラボ</small></span><span class="go">›</span></a>
+  </div>
+
+  <div class="app-section-title">難所を触って理解</div>
+  <div class="touch-lab-grid" aria-label="簿記3級の難所ラボ">
+    <a class="touch-lab-card accrual app-tap" href="labs.html?lab=accrual"><span class="touch-icon">⏱</span><span><strong>経過勘定</strong><small>前払・前受・未払・未収を時間軸で整理</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card asset app-tap" href="labs.html?lab=asset"><span class="touch-icon">🏢</span><span><strong>固定資産</strong><small>減価償却と期中売却を数字の減り方で理解</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card correction app-tap" href="labs.html?lab=correction"><span class="touch-icon">↔</span><span><strong>訂正仕訳</strong><small>逆仕訳→正しい仕訳→相殺を目で確認</small></span><span class="arrow">›</span></a>
+    <a class="touch-lab-card cogs app-tap" href="labs.html?lab=cogs"><span class="touch-icon">📦</span><span><strong>売上原価</strong><small>期首・仕入・期末在庫を箱として動かす</small></span><span class="arrow">›</span></a>
+  </div>
+  <a class="lab-all app-tap" href="labs.html"><span class="n">8</span><span><strong>難所ラボをすべて見る</strong><small>精算表・元帳・締切・総合ラボまでまとめて学ぶ</small></span><span class="go">›</span></a>
+
+  <div class="app-section-title">復習・確認</div>
+  <div class="app-support-grid">
+    <a class="app-support-card review app-tap" href="management.html#review"><span style="font-size:1.5rem">↻</span><span><b>復習</b><span>間違えた問題をもう一度</span></span></a>
+    <a class="app-support-card dict app-tap" href="glossary.html"><span style="font-size:1.5rem">▣</span><span><b>辞典</b><span>用語・科目をすぐ確認</span></span></a>
+    <a class="app-support-card manage app-tap" href="management.html"><span style="font-size:1.5rem">▥</span><span><b>学習管理</b><span>習熟度・進捗・弱点をチェック</span></span></a>
+    <a class="app-support-card settings app-tap" href="settings.html"><span style="font-size:1.5rem">⚙</span><span><b>設定</b><span>習熟条件・文字・配色</span></span></a>
+  </div>
+</main>
 </div>
-<div class="v23-section">理解・復習</div><div class="v23-mini-grid"><a class="v23-mini" href="understand.html"><b>💡 しくみを理解</b><span>図と数字の流れから理解する</span></a><a class="v23-mini" href="management.html#review"><b>↻ 苦手を復習</b><span>つまずいたところを優先する</span></a></div>
-<div class="v23-section">学習記録</div><div class="v23-menu-note"><div class="v23-rate-row"><span>本番形式正答率</span><b id="examRate">—</b></div><div class="v23-note">現在は第1問の自力入力結果を表示します。第2問・第3問の本格入力形式は今後ここへ統合します。</div><div style="margin-top:10px"><a href="management.html" class="u-btn u-ghost" style="text-decoration:none;text-align:center">詳しい学習記録を見る</a></div></div>
-</main></div>
-<nav class="u-nav"><div class="u-nav-inner"><a class="active" href="index.html"><b>⌂</b>ホーム</a><a href="learn.html"><b>▣</b>学ぶ</a><a href="management.html#review"><b>↻</b>復習</a><a href="management.html"><b>▥</b>記録</a></div></nav>
-<script src="stats.js"></script><script src="unified.js"></script><script>
-(function(){const s=BOKI_STATS.get();const goal=Number(window.BOKI_SETTINGS?.daily||10);todayCount.textContent=s.today.answered;dailyGoal.textContent=goal;practiceRate.textContent=s.practice.rate==null?'—':s.practice.rate+'%';examRate.textContent=s.exam.rate==null?'未測定':s.exam.rate+'%';streak.textContent=s.streak+'日';recommendTitle.textContent=s.recommendation.title;recommendText.textContent=s.recommendation.text;recommendBtn.href=s.recommendation.href;recommendBtn.textContent=s.recommendation.button;const last=localStorage.getItem('boki3_last_page');if(last&&s.today.answered===0){recommendText.textContent='前回の続きから始められます。';recommendBtn.href=last;recommendBtn.textContent='続きから始める'}})();
+<nav class="u-nav"><div class="u-nav-inner">
+<a class="active" href="index.html"><b>⌂</b>ホーム</a>
+<a href="learn.html"><b>▣</b>学習メニュー</a>
+<a href="management.html#review"><b>↻</b>復習</a>
+<a href="settings.html"><b>•••</b>その他</a>
+</div></nav>
+<script src="unified.js"></script>
+<script>
+function safe(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}}
+const sets=[safe('boki3_q1_trainer_v1')||{},safe('boki3trainer_v2')||{},safe('boki3_q3_trainer_v1')||{},safe('boki3_cross_learning_v1')||{}];
+let ans=0,cor=0;sets.forEach(x=>{ans+=x.answered||0;cor+=x.correct||0});document.getElementById('allAcc').textContent=ans?Math.round(cor/ans*100)+'%':'—';
+const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const dk=dateKey(new Date());let today=0;sets.forEach(x=>today+=(x.history?.[dk]?.answered||0));document.getElementById('todayCount').textContent=today;
+const goal=Number(window.BOKI_SETTINGS?.daily||10);document.getElementById('dailyGoal').textContent=goal;const pct=Math.min(100,Math.round(today/Math.max(1,goal)*100));document.getElementById('todayRing').style.setProperty('--p',pct);
+const days=new Set();sets.forEach(x=>Object.entries(x.history||{}).forEach(([k,v])=>{if((v.answered||0)>0)days.add(k)}));let streak=0;for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);const k=dateKey(d);if(days.has(k))streak++;else if(i===0)continue;else break}document.getElementById('streak').textContent=streak+'日';
+const last=localStorage.getItem('boki3_last_page');if(last){const b=document.getElementById('continueBtn');b.href=last;b.textContent='前回の続きから ▶'}
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script></body></html>
+</script>
+<script src="mastery.js"></script>
+</body></html>

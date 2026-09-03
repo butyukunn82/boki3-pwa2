@@ -24,8 +24,9 @@ for(const a of assets){
   const rel=a.replace(/^\.\//,'').split('?')[0];
   ok(fs.existsSync(path.join(root,rel)),`Cached asset does not exist: ${a}`);
 }
-ok(assets.includes('./about.html'),'about.html must be available offline');
-ok(assets.includes('./public-info-v1.js'),'public-info-v1.js must be cached');
+for(const must of ['./about.html','./public-info-v1.js','./mock-q1-content-audit-v1.js','./q1-cbt-content-audit-v1.js','./q2-originality-v2.js','./q3-originality-v2.js']){
+  ok(assets.includes(must),`Required audited asset is not cached: ${must}`);
+}
 
 console.log('3. Public information');
 const about=read('about.html');
@@ -34,6 +35,7 @@ for(const phrase of ['個人制作・非公式教材','公式教材ではあり�
 }
 const publicInfo=read('public-info-v1.js');
 ok(publicInfo.includes('非公式学習アプリ'),'Global unofficial notice is missing');
+ok(publicInfo.includes('合格をめざす'),'Home copy must avoid a pass guarantee');
 
 console.log('4. Grade 3 account master and aliases');
 const accountCode=read('account-master.js')+'\n;globalThis.__audit={accounts:BOKI_ACCOUNTS,accept:isAcceptedBokiAccount,find:findBokiAccount};';
@@ -51,7 +53,17 @@ ok(accept('支払家賃','地代家賃',true),'地代家賃 alias missing');
 ok(accept('租税公課','公租公課',true),'公租公課 alias missing');
 ok(!accept('給料','給料手当',false),'Aliases must not be accepted unless a question explicitly allows them');
 
-console.log('5. Original Q2 interest scenario');
+console.log('5. Audited Q1 content');
+const q1mockPatch=read('mock-q1-content-audit-v1.js');
+for(const phrase of ['当社負担の発送費','発送費','受取家賃','前受家賃','機能を向上させる改良費','土地'])ok(q1mockPatch.includes(phrase),`Q1 mock audit patch is missing: ${phrase}`);
+const q1cbtPatch=read('q1-cbt-content-audit-v1.js');
+ok(q1cbtPatch.includes("id:'petty-cash-imprest'")||q1cbtPatch.includes("id:\"petty-cash-imprest\""),'Q1 CBT out-of-scope item has not been replaced');
+ok(q1cbtPatch.includes('小口現金係へ100,000円'),'Q1 CBT replacement must be an in-scope petty-cash problem');
+const loader=read('learning-map-nav.js');
+ok(loader.indexOf("mock-q1-pool-v4")<loader.indexOf("mock-q1-content-audit-v1"),'Q1 audit patch must load after Q1 pool');
+ok(loader.includes("if(p==='q1-cbt.html')")&&loader.includes('q1-cbt-content-audit-v1'),'Q1 CBT audit patch is not loaded');
+
+console.log('6. Original Q2 interest scenario');
 const q2ctx={console,builders:{},state:null,inputHtml:()=>'',selectHtml:()=>'',theoryHtml:()=>'',Y:n=>String(n)};
 vm.createContext(q2ctx);vm.runInContext(read('q2-originality-v2.js'),q2ctx);
 ok(typeof q2ctx.builders.interest==='function','Original Q2 interest builder is missing');
@@ -62,8 +74,9 @@ assert.equal(a.intOpenN+a.intCloseN,a.intBankN+a.intAccN,'受取利息 ledger do
 assert.equal(a.arOpenN+a.arNewN,a.arReverseN+a.arCarryN,'未収利息 ledger does not balance');
 const q2text=read('q2-originality-v2.js');
 ok(q2text.includes('前期10月1日')&&q2text.includes('当期12月1日'),'Original interest chronology changed unexpectedly');
+ok(!q2text.includes('未払利息'),'Q2 originality scenario must not revert to the sample-like payable-interest pattern');
 
-console.log('6. Original Q3 comprehensive scenario');
+console.log('7. Original Q3 comprehensive scenario');
 const noop=()=>{};
 const q3ctx={console,make:noop,gradeAll:noop,pick:a=>a[0],mode:'comprehensive',p:null,common:{innerHTML:''},answerArea:{innerHTML:''},result:{classList:{remove:noop,add:noop},scrollIntoView:noop},window:{scrollTo:noop},document:{querySelectorAll:()=>[]},score:{textContent:''},summary:{textContent:''},explain:{innerHTML:''},localStorage:{getItem:()=>null,setItem:noop},Y:n=>String(n)};
 vm.createContext(q3ctx);vm.runInContext(read('q3-originality-v2.js'),q3ctx);
@@ -75,7 +88,7 @@ assert.equal(x.cogs,3940000);assert.equal(x.bad,6400);assert.equal(x.dep,250000)
 const q3text=read('q3-originality-v2.js');
 for(const risky of ['仮払消費税','通信費1,500円','商品20,000円（税抜）'])ok(!q3text.includes(risky),`Old sample-like Q3 pattern returned: ${risky}`);
 
-console.log('7. Publication policy');
+console.log('8. Publication policy');
 const policy=read('CONTENT_AUDIT.md');
 for(const phrase of ['数値だけを変更','資産合計＝負債・純資産合計','強制再読み込みしない'])ok(policy.includes(phrase),`CONTENT_AUDIT.md is missing rule: ${phrase}`);
 

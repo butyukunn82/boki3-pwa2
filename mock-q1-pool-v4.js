@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 if(typeof buildQ1!=='function'||typeof jr!=='function'||typeof shuffle!=='function')return;
-const addAccounts=['修繕費','固定資産売却益','固定資産売却損','仮払法人税等','当座借越','小口現金','通信費','貯蔵品'];
+const addAccounts=['発送費','受取家賃','前受家賃','土地','修繕費','固定資産売却益','固定資産売却損','仮払法人税等','当座借越','小口現金','通信費','貯蔵品'];
 if(typeof ACCOUNTS!=='undefined'&&Array.isArray(ACCOUNTS)) addAccounts.forEach(a=>{if(!ACCOUNTS.includes(a))ACCOUNTS.push(a)});
 const rnd=(a,b,step=1000)=>Math.floor((a+Math.floor(Math.random()*((b-a)/step+1))*step)/step)*step;
 const q=(cat,text,debits,credits)=>Object.assign(jr(text,debits,credits),{cat});
@@ -13,7 +13,7 @@ trade:[
  ()=>{const n=rnd(40000,140000,5000);return q('trade',`商品${n.toLocaleString()}円を現金で仕入れた。`,[['仕入',n]],[['現金',n]])},
  ()=>{const n=rnd(10000,50000,1000);return q('trade',`掛けで販売した商品のうち${n.toLocaleString()}円が返品された。`,[['売上',n]],[['売掛金',n]])},
  ()=>{const n=rnd(10000,50000,1000);return q('trade',`掛けで仕入れた商品のうち${n.toLocaleString()}円を返品した。`,[['買掛金',n]],[['仕入',n]])},
- ()=>{const n=rnd(70000,180000,5000),f=rnd(2000,6000,1000);return q('trade',`商品${n.toLocaleString()}円を掛けで販売し、当社負担の発送費${f.toLocaleString()}円を現金で支払った。`,[['売掛金',n],['支払手数料',f]],[['売上',n],['現金',f]])},
+ ()=>{const n=rnd(70000,180000,5000),f=rnd(2000,6000,1000);return q('trade',`商品${n.toLocaleString()}円を掛けで販売し、当社負担の発送費${f.toLocaleString()}円を現金で支払った。`,[['売掛金',n],['発送費',f]],[['売上',n],['現金',f]])},
  ()=>{const base=rnd(60000,150000,5000),tax=base*.1;return q('trade',`商品${base.toLocaleString()}円（税抜）を掛けで販売した。消費税10%、税抜方式。`,[['売掛金',base+tax]],[['売上',base],['仮受消費税',tax]])},
  ()=>{const base=rnd(50000,140000,5000),tax=base*.1;return q('trade',`商品${base.toLocaleString()}円（税抜）を掛けで仕入れた。消費税10%、税抜方式。`,[['仕入',base],['仮払消費税',tax]],[['買掛金',base+tax]])}
 ],
@@ -30,7 +30,7 @@ asset:[
  ()=>{const n=rnd(120000,480000,10000);return q('asset',`備品${n.toLocaleString()}円を購入し、代金は翌月支払うこととした。`,[['備品',n]],[['未払金',n]])},
  ()=>{const n=rnd(900000,2400000,100000);return q('asset',`建物${n.toLocaleString()}円を購入し、代金を普通預金から支払った。`,[['建物',n]],[['普通預金',n]])},
  ()=>{const n=rnd(50000,180000,5000);return q('asset',`備品の通常の修理代${n.toLocaleString()}円を現金で支払った。修理は現状維持のためのものである。`,[['修繕費',n]],[['現金',n]])},
- ()=>{const n=rnd(50000,180000,5000);return q('asset',`備品の機能を向上させる改良費${n.toLocaleString()}円を現金で支払った。`,[['備品',n]],[['現金',n]])},
+ ()=>{const n=rnd(50000,180000,5000);return q('asset',`土地${n.toLocaleString()}円を購入し、代金を現金で支払った。`,[['土地',n]],[['現金',n]])},
  ()=>{const n=rnd(30000,90000,5000);return q('asset',`備品の当期減価償却費${n.toLocaleString()}円を間接法で計上する。`,[['減価償却費',n]],[['備品減価償却累計額',n]])},
  ()=>{const cost=rnd(300000,600000,50000),acc=rnd(120000,240000,30000),book=cost-acc,cash=book+rnd(20000,60000,10000),gain=cash-book;return q('asset',`取得原価${cost.toLocaleString()}円、減価償却累計額${acc.toLocaleString()}円の備品を${cash.toLocaleString()}円で現金売却した。`,[['現金',cash],['備品減価償却累計額',acc]],[['備品',cost],['固定資産売却益',gain]])},
  ()=>{const cost=rnd(300000,600000,50000),acc=rnd(120000,240000,30000),book=cost-acc,cash=book-rnd(20000,60000,10000),loss=book-cash;return q('asset',`取得原価${cost.toLocaleString()}円、減価償却累計額${acc.toLocaleString()}円の備品を${cash.toLocaleString()}円で現金売却した。`,[['現金',cash],['備品減価償却累計額',acc],['固定資産売却損',loss]],[['備品',cost]])}
@@ -50,7 +50,7 @@ adjusting:[
  ()=>{const n=rnd(10000,30000,1000);return q('adjusting',`前期に貸倒処理した売掛金${n.toLocaleString()}円を当期に現金で回収した。`,[['現金',n]],[['償却債権取立益',n]])},
  ()=>{const n=rnd(10000,30000,1000);return q('adjusting',`決算日に未使用の郵便切手${n.toLocaleString()}円分を貯蔵品へ振り替えた。`,[['貯蔵品',n]],[['通信費',n]])},
  ()=>{const oi=rnd(200000,360000,20000),ci=rnd(180000,340000,20000);return q('adjusting',`決算整理で、期首商品${oi.toLocaleString()}円を仕入勘定へ振り替え、期末商品${ci.toLocaleString()}円を繰越商品として計上する。`,[['仕入',oi],['繰越商品',ci]],[['繰越商品',oi],['仕入',ci]])},
- ()=>{const n=rnd(30000,90000,5000);return q('adjusting',`翌期分として受け取っていた家賃${n.toLocaleString()}円を決算整理で前受分として振り替える。`,[['売上',n]],[['前受金',n]])}
+ ()=>{const n=rnd(30000,90000,5000);return q('adjusting',`翌期分として受け取っていた家賃${n.toLocaleString()}円を決算整理で前受分として振り替える。`,[['受取家賃',n]],[['前受家賃',n]])}
 ],
 equity:[
  ()=>{const d=rnd(80000,180000,10000),r=Math.round(d*.1);return q('equity',`株主総会で配当金${d.toLocaleString()}円と利益準備金${r.toLocaleString()}円の積立てを決議した。`,[['繰越利益剰余金',d+r]],[['未払配当金',d],['利益準備金',r]])},

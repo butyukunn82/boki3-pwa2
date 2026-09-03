@@ -2,8 +2,8 @@
 'use strict';
 function current(){return (location.pathname.split('/').pop()||'index.html').toLowerCase()}
 function navHtml(){const p=current(),items=[['index.html','⌂','ホーム'],['learn.html','🗺','学習マップ'],['questions.html','☑','問題帳'],['management.html','▦','学習管理'],['settings.html','•••','その他']];return items.map(([href,icon,label])=>`<a href="${href}" class="navbtn ${p===href?'active':''}"><b>${icon}</b>${label}</a>`).join('')}
-function loadAddon(id,src){if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.async=false;s.src=src+'?v=2';document.body.appendChild(s)}
-function pageAddons(){const p=current();if(p==='mock.html'){loadAddon('mock-multiset-v3','mock-multiset-v3.js');loadAddon('mock-q1-pool-v4','mock-q1-pool-v4.js')}if(p==='q2-cbt.html')loadAddon('q2-asset-fix-v1','q2-asset-fix-v1.js')}
+function loadAddon(id,src){if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.async=false;s.src=src+'?v=3';document.body.appendChild(s)}
+function pageAddons(){const p=current();if(p==='mock.html'){loadAddon('mock-multiset-v3','mock-multiset-v3.js');loadAddon('mock-q1-pool-v4','mock-q1-pool-v4.js');loadAddon('mock-analysis-v1','mock-analysis-v1.js')}if(p==='q2-cbt.html'){loadAddon('q2-asset-fix-v1','q2-asset-fix-v1.js');loadAddon('cbt-deeplink-v1','cbt-deeplink-v1.js')}if(p==='q3-cbt.html')loadAddon('cbt-deeplink-v1','cbt-deeplink-v1.js')}
 function fix(){
  const html=navHtml();
  document.querySelectorAll('.u-nav .u-nav-inner').forEach(n=>{n.innerHTML=html;n.style.gridTemplateColumns='repeat(5,1fr)'});

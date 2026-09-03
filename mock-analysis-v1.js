@@ -13,12 +13,16 @@ const Q2LINK={closing:'q2-cbt.html?mode=closing',asset:'q2-cbt.html?mode=asset',
 const Q3LINK={statements:'q3-cbt.html?mode=statements',worksheet:'q3-cbt.html?mode=worksheet',adjusted:'q3-cbt.html?mode=adjusted',comprehensive:'q3-cbt.html?mode=comprehensive'};
 const pct=(c,t)=>t?Math.round(c/t*100):100;
 function controlScore(root){const ok=root.querySelectorAll('.ok').length,ng=root.querySelectorAll('.ng').length;return{correct:ok,total:ok+ng,rate:pct(ok,ok+ng),wrong:ng}}
+function q1Ok(card,i){
+ try{const q=state?.q1?.[i];if(!q)return false;if(typeof actualSide==='function'&&typeof samePairs==='function')return samePairs(actualSide(card,'d'),q.debits)&&samePairs(actualSide(card,'c'),q.credits)}catch(e){}
+ return card.style.borderColor==='rgb(105, 189, 142)'||card.style.borderColor==='#69bd8e';
+}
 function q1Cats(){
  const cards=[...document.querySelectorAll('#q1 .qcard')],map={};
  cards.forEach((card,i)=>{
    const cat=(typeof state!=='undefined'&&state.q1&&state.q1[i]&&state.q1[i].cat)||'other';
    if(!map[cat])map[cat]={cat,label:(CAT[cat]||{label:'第1問'}).label,correct:0,total:0,wrong:0};
-   const bad=card.querySelector('.ng')!==null;
+   const bad=!q1Ok(card,i);
    map[cat].total++;
    if(bad)map[cat].wrong++;else map[cat].correct++;
  });

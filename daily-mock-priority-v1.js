@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 if(typeof list==='undefined'||!Array.isArray(list)||typeof shuffle!=='function')return;
-const KEY='boki3_mock_last_analysis_v1',MAX_AGE=7*24*60*60*1000;
+const KEY='boki3_mock_last_analysis_v1',MAX_AGE=7*24*60*60*1000,MAX_MOCK=4;
 let a;try{a=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){a=null}
 if(!a||!Array.isArray(a.priorities)||!a.priorities.length||!a.at||Date.now()-a.at>MAX_AGE)return;
 const uniq=x=>[...new Set(x)];
@@ -49,7 +49,7 @@ const BANK={
 };
 function keyFor(p){const t=String(p.title||'');return Object.keys(BANK).find(k=>t.includes(k.replace(/^第[123]問｜/,''))&&t.startsWith(k.slice(0,3)))||Object.keys(BANK).find(k=>t===k)||''}
 const extras=[];const labels=[];
-a.priorities.slice(0,3).forEach((p,i)=>{const k=keyFor(p);if(!k||!BANK[k])return;const count=(Number(p.rate)<50&&extras.length<3)?2:1;shuffle(BANK[k]).slice(0,count).forEach(x=>{extras.push({...x,id:`mock:${k}:${extras.length}:${Date.now()}`,display:shuffle(x.choices)});labels.push(k.replace(/^第[123]問｜/,''))})});
+a.priorities.slice(0,3).forEach(p=>{if(extras.length>=MAX_MOCK)return;const k=keyFor(p);if(!k||!BANK[k])return;const desired=Number(p.rate)<50?2:1,count=Math.min(desired,MAX_MOCK-extras.length);shuffle(BANK[k]).slice(0,count).forEach(x=>{extras.push({...x,id:`mock:${k}:${extras.length}:${Date.now()}`,display:shuffle(x.choices)});labels.push(k.replace(/^第[123]問｜/,''))})});
 if(!extras.length)return;
 const original=[...list],seen=new Set(extras.map(x=>x.q)),chosen=[...extras];
 const countSrc=s=>chosen.filter(x=>x.source===s).length;

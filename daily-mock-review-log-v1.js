@@ -18,10 +18,11 @@ const TOPIC_TO_TITLE={
  '模試復習・精算表':'第3問｜精算表',
  '模試復習・整理後試算表':'第3問｜整理後残高試算表'
 };
+function resolveTitle(topic,analysis){const base=TOPIC_TO_TITLE[topic];const ps=analysis?.priorities||[];if(topic==='模試復習・経過勘定'){const p=ps.find(x=>String(x.title||'').includes('利息・経過勘定'));if(p)return p.title}if(topic==='模試復習・B/S・P/L'){const p=ps.find(x=>String(x.title||'').includes('総合決算'));if(p)return p.title}return base}
 const original=record;
 record=function(value,unknown){
  const current=list[idx],before=!!responses[idx],analysis=(()=>{try{return JSON.parse(localStorage.getItem('boki3_mock_last_analysis_v1')||'null')}catch{return null}})();
- const title=current&&TOPIC_TO_TITLE[current.topic];
+ const title=current&&resolveTitle(current.topic,analysis);
  const out=original.apply(this,arguments);
  if(!before&&title&&responses[idx]){
    let events;try{events=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(events))events=[]}catch{events=[]}

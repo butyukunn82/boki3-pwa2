@@ -7,6 +7,11 @@ import {execFileSync} from 'node:child_process';
 const root=process.cwd();
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const ok=(cond,msg)=>assert.ok(cond,msg);
+const journalBalance=q=>{
+  const d=(q.d||q.debits||[]).reduce((n,x)=>n+Number(x[1]||0),0);
+  const c=(q.c||q.credits||[]).reduce((n,x)=>n+Number(x[1]||0),0);
+  return [d,c];
+};
 
 console.log('1. JavaScript syntax');
 for(const name of fs.readdirSync(root).filter(x=>x.endsWith('.js'))){
@@ -24,7 +29,7 @@ for(const a of assets){
   const rel=a.replace(/^\.\//,'').split('?')[0];
   ok(fs.existsSync(path.join(root,rel)),`Cached asset does not exist: ${a}`);
 }
-for(const must of ['./about.html','./public-info-v1.js','./mock-q1-content-audit-v1.js','./q1-cbt-content-audit-v1.js','./q2-originality-v2.js','./q3-originality-v2.js']){
+for(const must of ['./about.html','./public-info-v1.js','./public-info-cbt-v2.js','./mock-q1-content-audit-v1.js','./q1-cbt-content-audit-v1.js','./q2-originality-v2.js','./q3-originality-v2.js']){
   ok(assets.includes(must),`Required audited asset is not cached: ${must}`);
 }
 
@@ -36,6 +41,8 @@ for(const phrase of ['個人制作・非公式教材','公式教材ではあり�
 const publicInfo=read('public-info-v1.js');
 ok(publicInfo.includes('非公式学習アプリ'),'Global unofficial notice is missing');
 ok(publicInfo.includes('合格をめざす'),'Home copy must avoid a pass guarantee');
+const cbtNotice=read('public-info-cbt-v2.js');
+ok(cbtNotice.includes("body > .wrap")&&cbtNotice.includes('非公式学習アプリ'),'CBT publication notice fallback is incomplete');
 
 console.log('4. Grade 3 account master and aliases');
 const accountCode=read('account-master.js')+'\n;globalThis.__audit={accounts:BOKI_ACCOUNTS,accept:isAcceptedBokiAccount,find:findBokiAccount};';
@@ -53,14 +60,49 @@ ok(accept('支払家賃','地代家賃',true),'地代家賃 alias missing');
 ok(accept('租税公課','公租公課',true),'公租公課 alias missing');
 ok(!accept('給料','給料手当',false),'Aliases must not be accepted unless a question explicitly allows them');
 
-console.log('5. Audited Q1 content');
+console.log('5. All Q1 journal entries');
+const mockQ1=read('mock-q1-pool-v4.js');
+ok(!mockQ1.includes('機能を向上させる改良費'),'Out-of-scope capital-expenditure item returned to mock Q1 source');
+ok(mockQ1.includes("['発送費',f]")||mockQ1.includes('[\'発送費\',f]'),'Shipping cost must use 発送費');
+ok(mockQ1.includes("[['受取家賃',n]],[['前受家賃',n]]"),'Accrued/deferral rent adjustment must use 受取家賃・前受家賃');
+const exposedMock=mockQ1.replace(/\}\)\(\);\s*$/, 'globalThis.__auditG=G;})();');
+const q1ctx={
+  console,
+  buildQ1(){return[]},
+  jr:(text,debits,credits)=>({text,debits,credits}),
+  shuffle:a=>[...a],
+  ACCOUNTS:[],
+  document:{getElementById(){return null}},
+  Math
+};
+vm.createContext(q1ctx);vm.runInContext(exposedMock,q1ctx);
+ok(q1ctx.__auditG,'Mock Q1 generator bank could not be exposed for audit');
+for(const [cat,gens] of Object.entries(q1ctx.__auditG)){
+  for(let i=0;i<gens.length;i++){
+    const q=gens[i]();
+    const [d,c]=journalBalance(q);
+    assert.equal(d,c,`Mock Q1 unbalanced: ${cat}[${i}] ${q.text}`);
+    for(const [acc] of [...(q.debits||[]),...(q.credits||[])])ok(names.has(acc),`Mock Q1 unknown account: ${acc} / ${q.text}`);
+  }
+}
+const q1html=read('q1-cbt.html');
+ok(!q1html.includes("id:'capex-repair'"),'Out-of-scope capital-expenditure item returned to standalone Q1 CBT');
+ok(q1html.includes("id:'petty-cash-imprest'"),'Standalone Q1 CBT must contain the in-scope petty-cash replacement');
+const qMatch=q1html.match(/const Q=(\[[\s\S]*?\n\]);\nlet list=/);
+ok(qMatch,'Could not extract standalone Q1 question bank');
+const qList=vm.runInNewContext(qMatch[1]);
+assert.equal(qList.length,15,'Standalone Q1 CBT must contain 15 questions');
+for(const q of qList){
+  const [d,c]=journalBalance(q);
+  assert.equal(d,c,`Standalone Q1 unbalanced: ${q.id}`);
+  for(const [acc] of [...q.d,...q.c])ok(names.has(acc),`Standalone Q1 unknown account: ${acc} / ${q.id}`);
+}
 const q1mockPatch=read('mock-q1-content-audit-v1.js');
-for(const phrase of ['当社負担の発送費','発送費','受取家賃','前受家賃','機能を向上させる改良費','土地'])ok(q1mockPatch.includes(phrase),`Q1 mock audit patch is missing: ${phrase}`);
 const q1cbtPatch=read('q1-cbt-content-audit-v1.js');
-ok(q1cbtPatch.includes("id:'petty-cash-imprest'")||q1cbtPatch.includes("id:\"petty-cash-imprest\""),'Q1 CBT out-of-scope item has not been replaced');
-ok(q1cbtPatch.includes('小口現金係へ100,000円'),'Q1 CBT replacement must be an in-scope petty-cash problem');
+ok(q1mockPatch.includes('発送費')&&q1mockPatch.includes('前受家賃'),'Q1 mock safety patch is incomplete');
+ok(q1cbtPatch.includes('petty-cash-imprest'),'Q1 CBT safety patch is incomplete');
 const loader=read('learning-map-nav.js');
-ok(loader.indexOf("mock-q1-pool-v4")<loader.indexOf("mock-q1-content-audit-v1"),'Q1 audit patch must load after Q1 pool');
+ok(loader.indexOf('mock-q1-pool-v4')<loader.indexOf('mock-q1-content-audit-v1'),'Q1 audit patch must load after Q1 pool');
 ok(loader.includes("if(p==='q1-cbt.html')")&&loader.includes('q1-cbt-content-audit-v1'),'Q1 CBT audit patch is not loaded');
 
 console.log('6. Original Q2 interest scenario');
@@ -90,6 +132,6 @@ for(const risky of ['仮払消費税','通信費1,500円','商品20,000円（税
 
 console.log('8. Publication policy');
 const policy=read('CONTENT_AUDIT.md');
-for(const phrase of ['数値だけを変更','資産合計＝負債・純資産合計','強制再読み込みしない'])ok(policy.includes(phrase),`CONTENT_AUDIT.md is missing rule: ${phrase}`);
+for(const phrase of ['数値だけを変更','資産合計＝負債・純資産合計','強制再読み込みしない','上位級だけの論点','問題ごとに明示的に許容'])ok(policy.includes(phrase),`CONTENT_AUDIT.md is missing rule: ${phrase}`);
 
 console.log('Publication audit: PASS');

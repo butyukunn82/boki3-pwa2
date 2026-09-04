@@ -20,4 +20,6 @@ jobs:
         with:
           node-version: '22'
       - name: Run publication audit
-        run: node qa/publication-audit.mjs
+        run: |
+          node qa/publication-audit.mjs
+          node qa/publication-ux-audit.mjs

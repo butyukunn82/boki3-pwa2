@@ -30,9 +30,14 @@ console.log('UX 4. Mobile table usability');
 ok(ux.includes('表は横にスクロールできます'),'Horizontal-scroll hint is missing');
 ok(ux.includes('.tbl th:first-child')&&ux.includes('position:sticky'),'Sticky first-column support is missing');
 
-console.log('UX 5. Offline availability');
+console.log('UX 5. Result coaching');
+ok(ux.includes('enhanceMockResult')&&ux.includes('重点復習する'),'Mock result must lead directly to the weakest section');
+ok(ux.includes('enhanceDailyResult')&&ux.includes('今すぐ復習する'),'Daily result must lead directly to the weakest section');
+ok(ux.includes("q1-cbt.html")&&ux.includes("q2-cbt.html")&&ux.includes("q3-cbt.html"),'Weak-area result coaching must route to all three CBT modules');
+
+console.log('UX 6. Offline availability');
 const sw=read('sw.js');
 ok(sw.includes("'./publication-ux-v1.js'"),'Publication UX script is not cached for offline use');
-ok(sw.includes("v3.0.25-ux-final"),'Expected UX cache generation is not active');
+ok(sw.includes("v3.0.26-result-coach"),'Expected UX cache generation is not active');
 
 console.log('Publication UX audit: PASS');

@@ -15,29 +15,40 @@ ok(loader.includes('第3問　仕上げ：本番形式で解く'),'Q3 CBT finish
 ok(loader.includes("loadAddon('publication-ux-v1','publication-ux-v1.js')"),'Publication UX script is not loaded');
 ok(loader.includes("daily.insertAdjacentElement('afterend',box)"),'CBT finish card should follow the recommended practice card when available');
 
-console.log('UX 2. Q1 recommendation consistency');
+console.log('UX 2. Beginner-first home');
 const ux=read('publication-ux-v1.js');
+ok(ux.includes('simplifyBeginnerHome'),'Beginner home simplification is missing');
+ok(ux.includes("answeredCount()>=5"),'Beginner threshold is missing');
+ok(ux.includes("card.href='understand.html'")&&ux.includes('初めてなら ここから'),'Beginner primary CTA must lead to structural understanding');
+ok(ux.includes("cont.style.display='none'")&&ux.includes("picker.style.display='none'"),'Beginner home must hide competing primary actions');
+ok(ux.includes('すぐ問題を解きたい方：今日の10問'),'Beginner alternate route to daily questions is missing');
+
+console.log('UX 3. Q1 recommendation consistency');
 ok(ux.includes("kind==='basic'")&&ux.includes('session.list.slice(0,10)'),'Q1 recommended 10-question session fix is missing');
 const q1=read('q1.html');
 ok(q1.includes('5要素分類を10問'),'Q1 recommended card must promise 10 questions');
 
-console.log('UX 3. Mock completion safeguards');
+console.log('UX 4. Mock completion safeguards');
 ok(ux.includes('ux-input-progress'),'Mock input progress display is missing');
 ok(ux.includes('未入力が ${blank} か所あります'),'Mock unfinished-answer confirmation is missing');
 ok(ux.includes('beforeunload'),'Mock accidental-exit safeguard is missing');
 
-console.log('UX 4. Mobile table usability');
+console.log('UX 5. Mobile table and input usability');
 ok(ux.includes('表は横にスクロールできます'),'Horizontal-scroll hint is missing');
 ok(ux.includes('.tbl th:first-child')&&ux.includes('position:sticky'),'Sticky first-column support is missing');
+ok(ux.includes('uxCbtHelper')&&ux.includes('次の空欄へ'),'Standalone CBT next-empty helper is missing');
+ok(ux.includes('focusBlank')&&ux.includes("enterkeyhint','next"),'Mobile Enter-to-next behavior is missing');
+ok(ux.includes('ux-focus-row')&&ux.includes('ux-focus-box'),'Focused row/card highlight is missing');
+ok(ux.includes('入力完了 ✓'),'CBT completion feedback is missing');
 
-console.log('UX 5. Result coaching');
+console.log('UX 6. Result coaching');
 ok(ux.includes('enhanceMockResult')&&ux.includes('重点復習する'),'Mock result must lead directly to the weakest section');
 ok(ux.includes('enhanceDailyResult')&&ux.includes('今すぐ復習する'),'Daily result must lead directly to the weakest section');
 ok(ux.includes("q1-cbt.html")&&ux.includes("q2-cbt.html")&&ux.includes("q3-cbt.html"),'Weak-area result coaching must route to all three CBT modules');
 
-console.log('UX 6. Offline availability');
+console.log('UX 7. Offline availability');
 const sw=read('sw.js');
 ok(sw.includes("'./publication-ux-v1.js'"),'Publication UX script is not cached for offline use');
-ok(sw.includes("v3.0.26-result-coach"),'Expected UX cache generation is not active');
+ok(sw.includes("v3.0.27-beginner-mobile"),'Expected UX cache generation is not active');
 
 console.log('Publication UX audit: PASS');

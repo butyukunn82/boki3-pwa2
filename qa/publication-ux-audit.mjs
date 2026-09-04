@@ -33,6 +33,6 @@ ok(ux.includes('.tbl th:first-child')&&ux.includes('position:sticky'),'Sticky fi
 console.log('UX 5. Offline availability');
 const sw=read('sw.js');
 ok(sw.includes("'./publication-ux-v1.js'"),'Publication UX script is not cached for offline use');
-ok(sw.includes("v3.0.24-ux-audit"),'Expected UX cache generation is not active');
+ok(sw.includes("v3.0.25-ux-final"),'Expected UX cache generation is not active');
 
 console.log('Publication UX audit: PASS');
